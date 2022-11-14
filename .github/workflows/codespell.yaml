@@ -1,0 +1,23 @@
+#
+# GitHub Action to automate the identification of common misspellings in text files.
+# - https://github.com/codespell-project/actions-codespell
+# - https://github.com/codespell-project/codespell
+#
+name: Codespell
+on:
+  pull_request
+jobs:
+  codespell:
+    name: Check for spelling errors
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Codespell
+        uses: codespell-project/actions-codespell@master
+        with:
+          check_filenames: true
+          check_hidden: true
+          skip: .git,./ci/k6/lib/*,./charts/analytickit/crds/*,./charts/analytickit/tests/clickhouse-operator/__snapshot__/*,./charts/analytickit/templates/clickhouse-operator/*,./charts/analytickit/grafana-dashboards/http-by-application-endpoint.json,./yarn.lock

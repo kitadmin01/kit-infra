@@ -1,0 +1,21 @@
+suite: Cronjob backup definition
+templates:
+  - templates/clickhouse-backup-cronjob.yaml
+
+tests:
+  - it: should be empty if backup is false
+    set:
+      clickhouse.backup:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should match the snapshot when backup is true
+    set:
+      clickhouse.backup:
+        enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - matchSnapshot: {}

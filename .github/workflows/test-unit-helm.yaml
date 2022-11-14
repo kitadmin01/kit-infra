@@ -1,0 +1,28 @@
+name: Unit tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - charts/**
+      - ct.yaml
+      - .github/workflows/test-unit-helm.yaml
+  push:
+    branches:
+      - main
+
+jobs:
+  helm-unittest:
+    name: Helm unittest
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Helm unittest plugin
+        run: |
+          helm env
+          helm plugin install https://github.com/quintush/helm-unittest.git --version 0.2.8
+
+      - name: Run test suite
+        run: helm unittest --helm3 --strict --file 'tests/*.yaml' --file 'tests/clickhouse-operator/*.yaml' charts/analytickit
