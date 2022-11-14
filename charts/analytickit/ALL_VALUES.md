@@ -1,6 +1,6 @@
 # AnalyticKit Helm chart configuration
 
-![Version: 29.0.3](https://img.shields.io/badge/Version-29.0.3-informational?style=flat-square) ![AppVersion: 1.41.3](https://img.shields.io/badge/AppVersion-1.41.3-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: 0.0.1](https://img.shields.io/badge/AppVersion-0.0.1-informational?style=flat-square)
 
 ## Configuration
 
@@ -10,9 +10,9 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| cloud | string | `nil` | Cloud service being deployed on (example: `aws`, `azure`, `do`, `gcp`, `other`). |
+| cloud | string | `"aws"` | Cloud service being deployed on (example: `aws`, `azure`, `do`, `gcp`, `other`). |
 | notificationEmail | string | `nil` | Notification email for notifications to be sent to from the AnalyticKit stack |
-| siteUrl | string | `nil` |  |
+| siteUrl | string | `"dpa.analytickit.com"` |  |
 | image.repository | string | `"analytickit/analytickit"` | AnalyticKit image repository to use. |
 | image.sha | string | `nil` | AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`). |
 | image.tag | string | `nil` | AnalyticKit image tag to use (example: `release-1.35.0`). |
