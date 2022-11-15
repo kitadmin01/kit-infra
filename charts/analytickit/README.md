@@ -79,10 +79,10 @@ helm upgrade --install -f ci/values/k3s.yaml --timeout 20m --create-namespace --
 ./ci/setup_ingestion_test.sh
 
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-export POSTHOG_API_ADDRESS=$(kubectl get svc -n analytickit analytickit-web -o jsonpath="{.spec.clusterIP}")
-export POSTHOG_EVENTS_ADDRESS=$(kubectl get svc -n analytickit analytickit-events -o jsonpath="{.spec.clusterIP}")
-export "POSTHOG_API_ENDPOINT=http://${POSTHOG_API_ADDRESS}:8000"
-export "POSTHOG_EVENT_ENDPOINT=http://${POSTHOG_EVENTS_ADDRESS}:8000"
+export ANALYTICKIT_API_ADDRESS=$(kubectl get svc -n analytickit analytickit-web -o jsonpath="{.spec.clusterIP}")
+export ANALYTICKIT_EVENTS_ADDRESS=$(kubectl get svc -n analytickit analytickit-events -o jsonpath="{.spec.clusterIP}")
+export "ANALYTICKIT_API_ENDPOINT=http://${ANALYTICKIT_API_ADDRESS}:8000"
+export "ANALYTICKIT_EVENT_ENDPOINT=http://${ANALYTICKIT_EVENTS_ADDRESS}:8000"
 export "SKIP_SOURCE_IP_ADDRESS_CHECK=true"
 
 # Run test
