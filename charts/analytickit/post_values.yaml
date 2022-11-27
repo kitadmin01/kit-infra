@@ -1,44 +1,47 @@
 # -- Cloud service being deployed on (example: `aws`, `azure`, `do`, `gcp`, `other`).
 cloud: aws
 
-# -- Notification email for notifications to be sent to from the AnalyticKit stack
-notificationEmail: analytickit@gmail.com
+# -- Notification email for notifications to be sent to from the PostHog stack
+notificationEmail:
+
 # -- Site url specifies the canonical URL root the site can be accessed using.
 # This is used to e.g. generate shareable links to Dashboards.
-siteUrl:  analytickit.com
+siteUrl:
 
 image:
-  # -- AnalyticKit image repository to use.
-  repository: 1007234/analytickit
-  #image user/pass
-  #imageCredentials:
-  #registry: github.com
-  #username: kitadmin01
-  #password: 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
-  #email: analytickit@gmail.com
-  # -- AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`).
+  # -- PostHog image repository to use.
+  repository: posthog/posthog
+  # -- PostHog image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`).
   sha:
-  # -- AnalyticKit image tag to use (example: `release-1.35.0`).
-  tag: 
-  # -- AnalyticKit default image. Do not overwrite, use `image.sha` or `image.tag` instead.
-  default: ":latest"
-  # -- AnalyticKit image pull policy.
+  # -- PostHog image tag to use (example: `release-1.35.0`).
+  tag:
+  # -- PostHog default image. Do not overwrite, use `image.sha` or `image.tag` instead.
+  default: ":release-1.41.4"
+  # -- PostHog image pull policy.
   pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ## Example:
+  ## pullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  pullSecrets: []
 
 # -- Sentry endpoint to send errors to.
 sentryDSN:
 
 # -- Django SECRET_KEY to use for hashing e.g. passwords. See
 # https://docs.djangoproject.com/en/4.0/ref/settings/#secret-key
-analytickitSecretKey:
+posthogSecretKey:
   # -- Specify that the key should be pulled from an existing secret key. By
   # default the chart will generate a secret and create a Kubernetes Secret
   # containing it.
   existingSecret:
   # -- Specify the key within the secret from which SECRET_KEY should be taken.
-  existingSecretKey: analytickit-secret
+  existingSecretKey: posthog-secret
 
-# -- Environment variables to inject into every AnalyticKit deployment.
+# -- Environment variables to inject into every PostHog deployment.
 env: []
 # env:
 #   - name: FOO
@@ -46,12 +49,12 @@ env: []
 
 
 migrate:
-  # -- Whether to install the AnalyticKit migrate job or not.
+  # -- Whether to install the PostHog migrate job or not.
   enabled: true
 
 
 events:
-  # -- Whether to install the AnalyticKit events stack or not.
+  # -- Whether to install the PostHog events stack or not.
   enabled: true
 
   # -- Count of events pods to run. This setting is ignored if `events.hpa.enabled` is set to `true`.
@@ -79,7 +82,7 @@ events:
     enabled: false
 
 web:
-  # -- Whether to install the AnalyticKit web stack or not.
+  # -- Whether to install the PostHog web stack or not.
   enabled: true
 
   podAnnotations:
@@ -111,18 +114,18 @@ web:
 
   # -- Additional env variables to inject into the web stack deployment.
   env:
-    # -- Set google oauth 2 key. Requires analytickit ee license.
+    # -- Set google oauth 2 key. Requires posthog ee license.
     - name: SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
       value:
-    # -- Set google oauth 2 secret. Requires analytickit ee license.
+    # -- Set google oauth 2 secret. Requires posthog ee license.
     - name: SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
       value:
     # -- Set google oauth 2 whitelisted domains users can log in from.
     - name: SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS
-      value: "analytickit.com"
+      value: "posthog.com"
 
   internalMetrics:
-    # -- Whether to capture information on operation of analytickit into analytickit, exposed in /instance/status page
+    # -- Whether to capture information on operation of posthog into posthog, exposed in /instance/status page
     capture: true
 
   # -- Node labels for web stack deployment.
@@ -178,7 +181,7 @@ web:
     enabled: false
 
 worker:
-  # -- Whether to install the AnalyticKit worker stack or not.
+  # -- Whether to install the PostHog worker stack or not.
   enabled: true
 
   # -- Count of worker pods to run. This setting is ignored if `worker.hpa.enabled` is set to `true`.
@@ -220,7 +223,7 @@ worker:
     enabled: false
 
 plugins:
-  # -- Whether to install the AnalyticKit plugin-server stack or not.
+  # -- Whether to install the PostHog plugin-server stack or not.
   # This service handles data ingestion into ClickHouse, running apps and async
   # jobs. To scale these components separately, instead use the individual
   # component deployments, pluginsIngestion, pluginsAsync, pluginsJobs, and
@@ -294,7 +297,7 @@ plugins:
 
 
 pluginsAsync:
-  # -- Whether to install the AnalyticKit plugin-server async stack or not.
+  # -- Whether to install the PostHog plugin-server async stack or not.
   # If disabled (default), plugins service handles both ingestion and running of async tasks.
   # Allows for separate scaling of this service.
   enabled: false
@@ -372,7 +375,7 @@ pluginsAsync:
 # compatibility.
 
 pluginsIngestion:
-  # -- Whether to install the AnalyticKit plugin-server ingestion capability as an
+  # -- Whether to install the PostHog plugin-server ingestion capability as an
   # individual workload.
   enabled: false
 
@@ -443,7 +446,7 @@ pluginsIngestion:
 
 
 pluginsExports:
-  # -- Whether to install the AnalyticKit plugin-server exports capability as an
+  # -- Whether to install the PostHog plugin-server exports capability as an
   # individual workload.
   enabled: false
 
@@ -514,7 +517,7 @@ pluginsExports:
 
 
 pluginsJobs:
-  # -- Whether to install the AnalyticKit plugin-server jobs capability as an
+  # -- Whether to install the PostHog plugin-server jobs capability as an
   # individual workload.
   enabled: false
 
@@ -584,7 +587,7 @@ pluginsJobs:
   sentryDSN:
 
 pluginsScheduler:
-  # -- Whether to install the AnalyticKit plugin-server scheduler capability as an
+  # -- Whether to install the PostHog plugin-server scheduler capability as an
   # individual workload.
   enabled: false
 
@@ -725,14 +728,14 @@ saml:
 
 
 service:
-  # -- AnalyticKit service name.
-  name: analytickit
-  # -- AnalyticKit service type.
+  # -- PostHog service name.
+  name: posthog
+  # -- PostHog service type.
   type: NodePort
   externalPort: 8000
   internalPort: 8000
 
-  # -- AnalyticKit service annotations.
+  # -- PostHog service annotations.
   annotations: {}
 
 
@@ -743,13 +746,13 @@ service:
 ###
 cert-manager:
   # -- Whether to install `cert-manager` resources.
-  enabled: true
+  enabled: false
   # -- Whether to install `cert-manager` CRDs.
   installCRDs: true
   # -- Who to email if the certificate is about to expire
   # -- Defaults to `notificationEmail` if it is available
   # -- Base default is noreply@<your-ingress-hostname>
-  email: analytickit@gmail.com
+  email: null
 
   #
   # [Workaround] - do not use the local DNS for the 'cert-manager' pods since it would return local IPs
@@ -782,11 +785,11 @@ ingress:
   enabled: true
   # -- Ingress handler type. Defaults to `nginx` if nginx is enabled and to `clb` on gcp.
   type:
-  # -- URL to address your AnalyticKit installation. You will need to set up DNS after installation
-  hostname: dpa.analytickit.com
+  # -- URL to address your PostHog installation. You will need to set up DNS after installation
+  hostname:
   gcp:
     # -- Specifies the name of the global IP address resource to be associated with the google clb
-    ip_name: "analytickit"
+    ip_name: "posthog"
     # -- If true, will force a https redirect when accessed over http
     forceHttps: true
     # -- Specifies the name of the tls secret to be used by the ingress. If not specified a managed certificate will be generated.
@@ -795,7 +798,7 @@ ingress:
   letsencrypt:
   nginx:
     # -- Whether nginx is enabled
-    enabled: true
+    enabled: false
     # -- Whether to redirect to TLS with nginx ingress.
     redirectToTLS: true
   # -- Extra annotations
@@ -808,7 +811,7 @@ ingress-nginx:
   controller:
     config:
       # -- Whether to forward "X-Forwarded-*" headers to upstream services.
-      # -- This is needed to ensure the AnalyticKit application knows e.g. if the
+      # -- This is needed to ensure the PostHog application knows e.g. if the
       # -- downstream proxy is using a secure connection. See the official
       # -- [ingress-nginx documentation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-forwarded-headers)
       use-forwarded-headers: "true"
@@ -874,9 +877,9 @@ postgresql:
   # -- Whether to deploy a PostgreSQL server to satisfy the applications requirements. To use an external PostgreSQL instance set this to `false` and configure the `externalPostgresql` parameters.
   enabled: true
   # -- Name override for PostgreSQL app.
-  nameOverride: analytickit-postgresql
+  nameOverride: posthog-postgresql
   # -- PostgreSQL database name.
-  postgresqlDatabase: analytickit
+  postgresqlDatabase: posthog
   # -- PostgreSQL database password.
   postgresqlPassword: postgres
   persistence:
@@ -919,6 +922,14 @@ pgbouncer:
       repository: prometheuscommunity/pgbouncer-exporter
       tag: v0.4.1
       pullPolicy: IfNotPresent
+      ## Optionally specify an array of imagePullSecrets.
+      ## Secrets must be manually created in the namespace.
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      ## Example:
+      ## pullSecrets:
+      ##   - myRegistryKeySecretName
+      ##
+      pullSecrets: []
 
     # -- Resource limits for pgbouncer-exporter.
     resources: {}
@@ -1003,6 +1014,14 @@ pgbouncer:
     repository: bitnami/pgbouncer
     tag: 1.17.0
     pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## Example:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
 
   service:
     type: ClusterIP
@@ -1021,7 +1040,7 @@ redis:
   # -- Whether to deploy a Redis server to satisfy the applications requirements. To use an external redis instance set this to `false` and configure the `externalRedis` parameters.
   enabled: true
 
-  nameOverride: "analytickit-redis"
+  nameOverride: "posthog-redis"
 
   fullnameOverride: ""
 
@@ -1089,7 +1108,7 @@ kafka:
   # -- Whether to deploy Kafka as part of this release. To use an external Kafka instance set this to `false` and configure the `externalKafka` values.
   enabled: true
 
-  nameOverride: analytickit-kafka
+  nameOverride: posthog-kafka
 
   fullnameOverride: ""
 
@@ -1115,7 +1134,7 @@ kafka:
   externalZookeeper:
     # -- List of external zookeeper servers to use.
     servers:
-      - analytickit-analytickit-zookeeper:2181
+      - posthog-posthog-zookeeper:2181
 
 externalKafka:
   # - External Kafka brokers. Ignored if `kafka.enabled` is set to `true`. Multiple brokers can be provided as array/list.
@@ -1131,7 +1150,7 @@ zookeeper:
   # -- Whether to deploy Zookeeper as part of this release.
   enabled: true
 
-  nameOverride: analytickit-zookeeper
+  nameOverride: posthog-zookeeper
 
   # -- Number of ZooKeeper nodes
   replicaCount: 1
@@ -1168,15 +1187,15 @@ clickhouse:
   # -- Which namespace to install clickhouse and the `clickhouse-operator` to (defaults to namespace chart is installed to)
   namespace:
   # -- Clickhouse cluster
-  cluster: analytickit
+  cluster: posthog
   # -- Clickhouse database
-  database: analytickit
+  database: posthog
   # -- Clickhouse user
   user: admin
   # -- Clickhouse password
   password: a1f31e03-c88e-4ca6-a2df-ad49183d15d9
   # -- Clickhouse existing secret name that needs to be in the namespace where
-  # analytickit is deployed into. Will not use the above password value if set
+  # posthog is deployed into. Will not use the above password value if set
   existingSecret: ""
   # -- Key in the existingSecret containing the password value
   existingSecretPasswordKey: ""
@@ -1197,10 +1216,18 @@ clickhouse:
   image:
     # -- ClickHouse image repository.
     repository: clickhouse/clickhouse-server
-    # -- ClickHouse image tag. Note: AnalyticKit does not support all versions of ClickHouse. Please override the default only if you know what you are doing.
+    # -- ClickHouse image tag. Note: PostHog does not support all versions of ClickHouse. Please override the default only if you know what you are doing.
     tag: "22.3.13.80"
     # -- Image pull policy
     pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## Example:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
 
   # -- Toleration labels for clickhouse pod assignment
   tolerations: []
@@ -1228,7 +1255,7 @@ clickhouse:
   # allowed. This should suffice for most use case although to expose to other
   # networks you will need to update this setting.
   #
-  # For more details on usage, see https://analytickit.com/docs/self-host/deploy/configuration#securing-clickhouse
+  # For more details on usage, see https://posthog.com/docs/self-host/deploy/configuration#securing-clickhouse
   allowedNetworkIps:
     - "10.0.0.0/8"
     - "172.16.0.0/12"
@@ -1288,8 +1315,13 @@ clickhouse:
 
   ## -- Default settings configuration for ClickHouse. !!! Please DO NOT override this !!!
   defaultSettings:
-    default_database: "analytickit"
+    default_database: "posthog"
     format_schema_path: /etc/clickhouse-server/config.d/
+
+  ## -- specify additional user configs for ClickHouse. This will be added to
+  ## the users.xml configuration. See
+  ## https://github.com/Altinity/clickhouse-operator for details.
+  additionalUsersConfig:
 
   ## -- ClickHouse pod(s) annotation.
   podAnnotations:
@@ -1309,13 +1341,21 @@ clickhouse:
     image:
       # -- ClickHouse image repository.
       repository: clickhouse/clickhouse-server
-      # -- ClickHouse image tag. Note: AnalyticKit does not support all versions of ClickHouse. Please override the default only if you know what you are doing.
+      # -- ClickHouse image tag. Note: PostHog does not support all versions of ClickHouse. Please override the default only if you know what you are doing.
       tag: "22.3.13.80"
       # -- Image pull policy
       pullPolicy: IfNotPresent
+      ## Optionally specify an array of imagePullSecrets.
+      ## Secrets must be manually created in the namespace.
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      ## Example:
+      ## pullSecrets:
+      ##   - myRegistryKeySecretName
+      ##
+      pullSecrets: []
 
   backup:
-    # https://analytickit.com/docs/self-host/runbook/clickhouse/backup
+    # https://posthog.com/docs/self-host/runbook/clickhouse/backup
     # https://github.com/AlexAkulov/clickhouse-backup
     enabled: false
     image:
@@ -1325,6 +1365,14 @@ clickhouse:
       tag: "1.5.0"
       # -- Image pull policy
       pullPolicy: IfNotPresent
+      ## Optionally specify an array of imagePullSecrets.
+      ## Secrets must be manually created in the namespace.
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      ## Example:
+      ## pullSecrets:
+      ##   - myRegistryKeySecretName
+      ##
+      pullSecrets: []
 
     backup_user: backup
     # password in plain text because it's using in cronjob
@@ -1335,7 +1383,7 @@ clickhouse:
     # -- Key in the existingSecret containing the password value
     existingSecretPasswordKey: ""
     backup_schedule: "0 0 * * *" # backup every day at 0:00
-    clickhouse_services: "chi-analytickit-analytickit-0-0" # use first replica in each shard, use `kubectl get svc | grep chi-analytickit-analytickit`
+    clickhouse_services: "chi-posthog-posthog-0-0" # use first replica in each shard, use `kubectl get svc | grep chi-posthog-posthog`
 
     # All options: https://github.com/AlexAkulov/clickhouse-backup#default-config
     env:
@@ -1361,7 +1409,7 @@ externalClickhouse:
   # -- Name of the external cluster to run DDL queries on. This is required when clickhouse.enabled is false
   cluster:
   # -- Database name for the external cluster
-  database: analytickit
+  database: posthog
   # -- User name for the external cluster to connect to the external cluster as
   user:
   # -- Password for the cluster. Ignored if existingClickhouse.existingSecret is set
@@ -1437,7 +1485,7 @@ minio:
     # -- Enable MinIO data persistence using PVC.
     enabled: true
   # -- Comma, semi-colon or space separated list of buckets to create at initialization (only in standalone mode)
-  defaultBuckets: "analytickit"
+  defaultBuckets: "posthog"
   # -- Disable MinIO Web UI
   disableWebUI: true
 
@@ -1479,7 +1527,7 @@ grafana:
   # -- Whether to install Grafana or not.
   enabled: false
 
-  # -- Sidecar configuration to automagically pull the dashboards from the `charts/analytickit/grafana-dashboard` folder. See [official docs](https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md) for more info.
+  # -- Sidecar configuration to automagically pull the dashboards from the `charts/posthog/grafana-dashboard` folder. See [official docs](https://github.com/grafana/helm-charts/blob/main/charts/grafana/README.md) for more info.
   sidecar:
     dashboards:
       enabled: true
@@ -1497,7 +1545,7 @@ grafana:
       # Comment the snippet below if you are running with `prometheus.enabled: false`
       - name: Prometheus
         type: prometheus
-        url: http://analytickit-prometheus-server
+        url: http://posthog-prometheus-server
         access: proxy
         isDefault: true
         jsonData:
@@ -1507,14 +1555,14 @@ grafana:
       # Comment the snippet below if you are running with `loki.enabled: false`
       - name: Loki
         type: loki
-        url: http://analytickit-loki-read:3100
+        url: http://posthog-loki-read:3100
         access: proxy
         isDefault: false
 
       # Comment the snippet below if you are running with `prometheus.alertmanager.enabled: false`
       - name: Alertmanager
         type: alertmanager
-        url: http://analytickit-prometheus-alertmanager
+        url: http://posthog-prometheus-alertmanager
         access: proxy
         isDefault: false
         jsonData:
@@ -1534,15 +1582,18 @@ loki:
   # have an anti-affinity so you'll need at least as many nodes as replicas in a
   # set.
   enabled: false
-  loki:
-    # For backwards compatibility with Loki Chart 2.x we disable multi-tenancy.
-    # See
-    # https://github.com/grafana/loki/blob/167c95c3207c115284dd646179e53d66f7a84a66/docs/sources/operations/multi-tenancy.md
-    # for details.
-    auth_enabled: false
 
+  loki:
+    auth_enabled: false
     commonConfig:
       replication_factor: 1
+
+    ## -- Pod annotations.
+    podAnnotations: {}
+      # Uncomment those lines if you want Prometheus server to scrape metrics.
+      # prometheus.io/scrape: "true"
+      # prometheus.io/path: /metrics
+      # prometheus.io/port: "3100"
 
   read:
     replicas: 1
@@ -1566,18 +1617,14 @@ loki:
     drivesPerNode: 2
 
   # We add this override as otherwise the resource naming doesn't include
-  # "analytickit-" prepended. The upgrade from Loki Chart 2.x to 3.x resulted in the
+  # "posthog-" prepended. The upgrade from Loki Chart 2.x to 3.x resulted in the
   # naming of e.g. services to change. By adding we maintain backwards compat.
   # for anything that may be referencing e.g. services.
-  fullnameOverride: analytickit-loki
-  nameOverride: analytickit-loki
+  fullnameOverride: posthog-loki
+  nameOverride: posthog-loki
 
   # Whether to enabled monitoring of Loki. We avoid enabling this by default as
-  # it requires installing e.g. the grafana-operator. CRDs are not installed on
-  # upgrade, so to smooth the transition to Helm Chart version 3.x we disable
-  # this, although using the operator might offer a good option to allow
-  # decoupling of e.g. service and rule definitions from the Grafana and co
-  # workloads.
+  # it requires installing additional CRDs (e.g. the grafana-operator)
   monitoring:
     alerts:
       enabled: false
@@ -1586,11 +1633,16 @@ loki:
     rules:
       enabled: false
     selfMonitoring:
-      enabled: false # requires additional CRDs
+      enabled: false
       grafanaAgent:
         installOperator: false
+      lokiCanary:
+        enabled: false
     serviceMonitor:
       enabled: false
+
+  test:
+    enabled: false
 
 ###
 ###
@@ -1604,6 +1656,14 @@ eventrouter:
     repository: gcr.io/heptio-images/eventrouter
     tag: v0.3
     pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## Example:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
 
   # -- Resource limits for eventrouter.
   resources: {}
@@ -1616,9 +1676,10 @@ eventrouter:
 promtail:
   # -- Whether to install Promtail or not.
   enabled: false
+
   config:
     clients:
-      - url: http://analytickit-loki-write:3100/loki/api/v1/push
+      - url: http://posthog-loki-write:3100/loki/api/v1/push
 
     snippets:
       pipelineStages:
@@ -1643,7 +1704,7 @@ promtail:
                   source: timestamp
                   format: RFC3339
         - match:
-            selector: '{app="analytickit", container=~"analytickit-web|analytickit-worker|analytickit-events"}'
+            selector: '{app="posthog", container=~"posthog-web|posthog-worker|posthog-events"}'
             stages:
               - json:
                   expressions:
@@ -1688,7 +1749,7 @@ prometheus:
     # -- Alerts configuration. For more information see: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
     #
     # -- NOTE: alerting is an important part of any production system. With this Helm chart we aim to provide a good
-    # -- collection of default rules that can be used to successfully alert an operator if a AnalyticKit installation is not
+    # -- collection of default rules that can be used to successfully alert an operator if a PostHog installation is not
     # -- working as expected. As those rules will likely evolve over time and as we don't want to cut a new major release
     # -- every time it happens, please consider the `prometheus.serverFiles.alerting_rules.yml` defaults as UNSTABLE.
     # -- Please consider to explicitly override this input in your `values.yaml` if you need to keep it stable.
@@ -2451,7 +2512,7 @@ prometheus-kafka-exporter:
 
   # -- Specify the target Kafka brokers to monitor.
   kafkaServer:
-    - analytickit-analytickit-kafka:9092
+    - posthog-posthog-kafka:9092
 
 
 ###
@@ -2472,10 +2533,10 @@ prometheus-postgres-exporter:
   # -- Configuration options.
   config:
     datasource:
-      host: analytickit-analytickit-postgresql
+      host: posthog-posthog-postgresql
       user: postgres
       passwordSecret:
-        name: analytickit-analytickit-postgresql
+        name: posthog-posthog-postgresql
         key: postgresql-password
 
 
@@ -2495,7 +2556,7 @@ prometheus-redis-exporter:
     prometheus.io/port: "9121"
 
   # -- Specify the target Redis instance to monitor.
-  redisAddress: redis://analytickit-analytickit-redis-master:6379
+  redisAddress: redis://posthog-posthog-redis-master:6379
 
 
 ###
@@ -2510,3 +2571,11 @@ busybox:
   image: busybox:1.34
   # -- Image pull policy
   pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ## Example:
+  ## pullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  pullSecrets: []
