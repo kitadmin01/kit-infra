@@ -2,15 +2,15 @@
 
 {{/* ENV used by analytickit deployments for connecting to postgresql */}}
 {{- define "snippet.postgresql-env" }}
-- name: POSTHOG_POSTGRES_HOST
+- name: ANALYTICKIT_POSTGRES_HOST
   value: {{ template "analytickit.pgbouncer.host" . }}
-- name: POSTHOG_POSTGRES_PORT
+- name: ANALYTICKIT_POSTGRES_PORT
   value: {{ include "analytickit.pgbouncer.port" . | quote }}
-- name: POSTHOG_DB_USER
+- name: ANALYTICKIT_DB_USER
   value: {{ include "analytickit.postgresql.username" . }}
-- name: POSTHOG_DB_NAME
+- name: ANALYTICKIT_DB_NAME
   value: {{ include "analytickit.postgresql.database" . }}
-- name: POSTHOG_DB_PASSWORD
+- name: ANALYTICKIT_DB_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ include "analytickit.postgresql.secretName" . }}
@@ -22,15 +22,15 @@
 {{/* ENV used by migrate job for connecting to postgresql */}}
 {{- define "snippet.postgresql-migrate-env" }}
 # Connect directly to postgres (without pgbouncer) to avoid statement_timeout for longer-running queries
-- name: POSTHOG_POSTGRES_HOST
+- name: ANALYTICKIT_POSTGRES_HOST
   value: {{ template "analytickit.postgresql.host" . }}
-- name: POSTHOG_POSTGRES_PORT
+- name: ANALYTICKIT_POSTGRES_PORT
   value: {{ include "analytickit.postgresql.port" . | quote }}
-- name: POSTHOG_DB_USER
+- name: ANALYTICKIT_DB_USER
   value: {{ include "analytickit.postgresql.username" . }}
-- name: POSTHOG_DB_NAME
+- name: ANALYTICKIT_DB_NAME
   value: {{ include "analytickit.postgresql.database" . }}
-- name: POSTHOG_DB_PASSWORD
+- name: ANALYTICKIT_DB_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ include "analytickit.postgresql.secretName" . }}

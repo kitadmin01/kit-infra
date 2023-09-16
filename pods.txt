@@ -1,0 +1,1732 @@
+Name:             analytickit-analytickit-kafka-0
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit-analytickit-kafka
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:08:03 -0600
+Labels:           app.kubernetes.io/component=kafka
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=analytickit-kafka
+                  controller-revision-hash=analytickit-analytickit-kafka-85c669bd97
+                  helm.sh/chart=kafka-14.9.3
+                  statefulset.kubernetes.io/pod-name=analytickit-analytickit-kafka-0
+Annotations:      kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.118.47
+IPs:
+  IP:           192.168.118.47
+Controlled By:  StatefulSet/analytickit-analytickit-kafka
+Containers:
+  kafka:
+    Container ID:  docker://32536dd3205ceadca4beac7d21203965d4dd242a8413565605ad0b5f16c417f8
+    Image:         docker.io/bitnami/kafka:2.8.1-debian-10-r99
+    Image ID:      docker-pullable://bitnami/kafka@sha256:5a85aeb27ffad227df55f7253a5b3634472d9d028ca20da0d6b9e7bb049d41e9
+    Ports:         9092/TCP, 9093/TCP
+    Host Ports:    0/TCP, 0/TCP
+    Command:
+      /scripts/setup.sh
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:10:22 -0600
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Sun, 04 Dec 2022 14:09:26 -0600
+      Finished:     Sun, 04 Dec 2022 14:09:47 -0600
+    Ready:          True
+    Restart Count:  3
+    Liveness:       tcp-socket :kafka-client delay=10s timeout=5s period=10s #success=1 #failure=3
+    Readiness:      tcp-socket :kafka-client delay=5s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      BITNAMI_DEBUG:                                       false
+      MY_POD_IP:                                            (v1:status.podIP)
+      MY_POD_NAME:                                         analytickit-analytickit-kafka-0 (v1:metadata.name)
+      KAFKA_CFG_ZOOKEEPER_CONNECT:                         analytickit-analytickit-zookeeper:2181
+      KAFKA_INTER_BROKER_LISTENER_NAME:                    INTERNAL
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP:            INTERNAL:PLAINTEXT,CLIENT:PLAINTEXT
+      KAFKA_CFG_LISTENERS:                                 INTERNAL://:9093,CLIENT://:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS:                      INTERNAL://$(MY_POD_NAME).analytickit-analytickit-kafka-headless.analytickit.svc.cluster.local:9093,CLIENT://$(MY_POD_NAME).analytickit-analytickit-kafka-headless.analytickit.svc.cluster.local:9092
+      ALLOW_PLAINTEXT_LISTENER:                            yes
+      KAFKA_VOLUME_DIR:                                    /bitnami/kafka
+      KAFKA_LOG_DIR:                                       /opt/bitnami/kafka/logs
+      KAFKA_CFG_DELETE_TOPIC_ENABLE:                       false
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE:                 true
+      KAFKA_HEAP_OPTS:                                     -Xmx1024m -Xms1024m
+      KAFKA_CFG_LOG_FLUSH_INTERVAL_MESSAGES:               10000
+      KAFKA_CFG_LOG_FLUSH_INTERVAL_MS:                     1000
+      KAFKA_CFG_LOG_RETENTION_BYTES:                       15000000000
+      KAFKA_CFG_LOG_RETENTION_CHECK_INTERVALS_MS:          300000
+      KAFKA_CFG_LOG_RETENTION_HOURS:                       24
+      KAFKA_CFG_MESSAGE_MAX_BYTES:                         1000012
+      KAFKA_CFG_LOG_SEGMENT_BYTES:                         1073741824
+      KAFKA_CFG_LOG_DIRS:                                  /bitnami/kafka/data
+      KAFKA_CFG_DEFAULT_REPLICATION_FACTOR:                1
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR:          1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:  1
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR:             1
+      KAFKA_CFG_NUM_IO_THREADS:                            8
+      KAFKA_CFG_NUM_NETWORK_THREADS:                       3
+      KAFKA_CFG_NUM_PARTITIONS:                            1
+      KAFKA_CFG_NUM_RECOVERY_THREADS_PER_DATA_DIR:         1
+      KAFKA_CFG_SOCKET_RECEIVE_BUFFER_BYTES:               102400
+      KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES:                  104857600
+      KAFKA_CFG_SOCKET_SEND_BUFFER_BYTES:                  102400
+      KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS:           6000
+      KAFKA_CFG_AUTHORIZER_CLASS_NAME:                     
+      KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND:            true
+      KAFKA_CFG_SUPER_USERS:                               User:admin
+    Mounts:
+      /bitnami/kafka from data (rw)
+      /opt/bitnami/kafka/logs from logs (rw)
+      /scripts/setup.sh from scripts (rw,path="setup.sh")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-nlsp9 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-analytickit-analytickit-kafka-0
+    ReadOnly:   false
+  scripts:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      analytickit-analytickit-kafka-scripts
+    Optional:  false
+  logs:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  kube-api-access-nlsp9:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             analytickit-analytickit-postgresql-0
+Namespace:        analytickit
+Priority:         0
+Service Account:  default
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:08:02 -0600
+Labels:           app=analytickit-postgresql
+                  chart=postgresql-8.6.1
+                  controller-revision-hash=analytickit-analytickit-postgresql-57c64f66fd
+                  heritage=Helm
+                  release=analytickit
+                  role=master
+                  statefulset.kubernetes.io/pod-name=analytickit-analytickit-postgresql-0
+Annotations:      kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.107.190
+IPs:
+  IP:           192.168.107.190
+Controlled By:  StatefulSet/analytickit-analytickit-postgresql
+Containers:
+  analytickit-analytickit-postgresql:
+    Container ID:   docker://9a168ad49c05c391a22b498c470914adb95e5f35aaf5047ea3b5fa373f305ca4
+    Image:          docker.io/bitnami/postgresql:11.7.0-debian-10-r9
+    Image ID:       docker-pullable://bitnami/postgresql@sha256:f18ba80a1de4c8b93ff4bffa38f783c1e267c1e4a649e2b1296352a53fd12f1f
+    Port:           5432/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:08:24 -0600
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      250m
+      memory:   256Mi
+    Liveness:   exec [/bin/sh -c exec pg_isready -U "postgres" -d "analytickit" -h 127.0.0.1 -p 5432] delay=30s timeout=5s period=10s #success=1 #failure=6
+    Readiness:  exec [/bin/sh -c -e exec pg_isready -U "postgres" -d "analytickit" -h 127.0.0.1 -p 5432
+[ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+] delay=5s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      BITNAMI_DEBUG:           false
+      POSTGRESQL_PORT_NUMBER:  5432
+      POSTGRESQL_VOLUME_DIR:   /bitnami/postgresql
+      PGDATA:                  /bitnami/postgresql/data
+      POSTGRES_USER:           postgres
+      POSTGRES_PASSWORD:       <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      POSTGRES_DB:             analytickit
+      POSTGRESQL_ENABLE_LDAP:  no
+    Mounts:
+      /bitnami/postgresql from data (rw)
+      /dev/shm from dshm (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-f95j7 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-analytickit-analytickit-postgresql-0
+    ReadOnly:   false
+  dshm:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  1Gi
+  kube-api-access-f95j7:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             analytickit-analytickit-redis-master-0
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit-analytickit-redis
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:08:02 -0600
+Labels:           app.kubernetes.io/component=master
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=analytickit-redis
+                  controller-revision-hash=analytickit-analytickit-redis-master-5dc957885d
+                  helm.sh/chart=redis-16.8.9
+                  statefulset.kubernetes.io/pod-name=analytickit-analytickit-redis-master-0
+Annotations:      checksum/configmap: 102d18b86c777ee656efeb6038cbf36eb873bffa1aaf780003cff5651c29bdbe
+                  checksum/health: 74c2515f3974ddf65846e935365e3c05272a99f4bf65373dde96d38879ab8eb8
+                  checksum/scripts: 686158d8afafc5966a0eef728fe71a4c08fe713421d22ea73504074f7e79da7f
+                  checksum/secret: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                  kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.127.24
+IPs:
+  IP:           192.168.127.24
+Controlled By:  StatefulSet/analytickit-analytickit-redis-master
+Containers:
+  redis:
+    Container ID:  docker://ad7d1e1865ebfa6775a77669585f4acbc6764cfbc52307a12f87611b22394a8c
+    Image:         docker.io/bitnami/redis:6.2.7-debian-10-r0
+    Image ID:      docker-pullable://bitnami/redis@sha256:a97dd274c972cb39c8bfbf6f551fd80a9279b564e4713f4a2f02d213c033ae79
+    Port:          6379/TCP
+    Host Port:     0/TCP
+    Command:
+      /bin/bash
+    Args:
+      -c
+      /opt/bitnami/scripts/start-scripts/start-master.sh
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:08:37 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       exec [sh -c /health/ping_liveness_local.sh 5] delay=20s timeout=6s period=5s #success=1 #failure=5
+    Readiness:      exec [sh -c /health/ping_readiness_local.sh 1] delay=20s timeout=2s period=5s #success=1 #failure=5
+    Environment:
+      BITNAMI_DEBUG:           false
+      REDIS_REPLICATION_MODE:  master
+      ALLOW_EMPTY_PASSWORD:    yes
+      REDIS_TLS_ENABLED:       no
+      REDIS_PORT:              6379
+    Mounts:
+      /data from redis-data (rw)
+      /health from health (rw)
+      /opt/bitnami/redis/etc/ from redis-tmp-conf (rw)
+      /opt/bitnami/redis/mounted-etc from config (rw)
+      /opt/bitnami/scripts/start-scripts from start-scripts (rw)
+      /tmp from tmp (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-wbrv8 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  redis-data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  redis-data-analytickit-analytickit-redis-master-0
+    ReadOnly:   false
+  start-scripts:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      analytickit-analytickit-redis-scripts
+    Optional:  false
+  health:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      analytickit-analytickit-redis-health
+    Optional:  false
+  config:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      analytickit-analytickit-redis-configuration
+    Optional:  false
+  redis-tmp-conf:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  tmp:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  kube-api-access-wbrv8:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             analytickit-analytickit-zookeeper-0
+Namespace:        analytickit
+Priority:         0
+Service Account:  default
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:08:05 -0600
+Labels:           app.kubernetes.io/component=zookeeper
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=analytickit-zookeeper
+                  controller-revision-hash=analytickit-analytickit-zookeeper-6ccbbc7db5
+                  helm.sh/chart=zookeeper-7.0.5
+                  statefulset.kubernetes.io/pod-name=analytickit-analytickit-zookeeper-0
+Annotations:      kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.112.102
+IPs:
+  IP:           192.168.112.102
+Controlled By:  StatefulSet/analytickit-analytickit-zookeeper
+Containers:
+  zookeeper:
+    Container ID:  docker://fe89e1c646d3798ffc089d4daf5b5d317a03e1c307f4f5b182b2599d4bea0c5f
+    Image:         docker.io/bitnami/zookeeper:3.7.0-debian-10-r70
+    Image ID:      docker-pullable://bitnami/zookeeper@sha256:061e22290d520d3c1536bbb2d6ed29e284f47b46d5035b6b6de1424658f2153c
+    Ports:         2181/TCP, 2888/TCP, 3888/TCP
+    Host Ports:    0/TCP, 0/TCP, 0/TCP
+    Command:
+      bash
+      -ec
+      # Execute entrypoint as usual after obtaining ZOO_SERVER_ID
+      # check ZOO_SERVER_ID in persistent volume via myid
+      # if not present, set based on POD hostname
+      if [[ -f "/bitnami/zookeeper/data/myid" ]]; then
+        export ZOO_SERVER_ID="$(cat /bitnami/zookeeper/data/myid)"
+      else
+        HOSTNAME=`hostname -s`
+        if [[ $HOSTNAME =~ (.*)-([0-9]+)$ ]]; then
+          ORD=${BASH_REMATCH[2]}
+          export ZOO_SERVER_ID=$((ORD + 1 ))
+        else
+          echo "Failed to get index from hostname $HOST"
+          exit 1
+        fi
+      fi
+      exec /entrypoint.sh /run.sh
+      
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:09:11 -0600
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      250m
+      memory:   256Mi
+    Liveness:   exec [/bin/bash -c echo "ruok" | timeout 2 nc -w 2 localhost 2181 | grep imok] delay=30s timeout=5s period=10s #success=1 #failure=6
+    Readiness:  exec [/bin/bash -c echo "ruok" | timeout 2 nc -w 2 localhost 2181 | grep imok] delay=5s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      ZOO_DATA_LOG_DIR:            
+      ZOO_PORT_NUMBER:             2181
+      ZOO_TICK_TIME:               2000
+      ZOO_INIT_LIMIT:              10
+      ZOO_SYNC_LIMIT:              5
+      ZOO_MAX_CLIENT_CNXNS:        60
+      ZOO_4LW_COMMANDS_WHITELIST:  srvr, mntr, ruok
+      ZOO_LISTEN_ALLIPS_ENABLED:   no
+      ZOO_AUTOPURGE_INTERVAL:      1
+      ZOO_AUTOPURGE_RETAIN_COUNT:  3
+      ZOO_MAX_SESSION_TIMEOUT:     40000
+      ZOO_SERVERS:                 analytickit-analytickit-zookeeper-0.analytickit-analytickit-zookeeper-headless.analytickit.svc.cluster.local:2888:3888::1
+      ZOO_ENABLE_AUTH:             no
+      ZOO_HEAP_SIZE:               1024
+      ZOO_LOG_LEVEL:               ERROR
+      ALLOW_ANONYMOUS_LOGIN:       yes
+      POD_NAME:                    analytickit-analytickit-zookeeper-0 (v1:metadata.name)
+    Mounts:
+      /bitnami/zookeeper from data (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-6bg5r (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-analytickit-analytickit-zookeeper-0
+    ReadOnly:   false
+  kube-api-access-6bg5r:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             analytickit-cert-manager-5cb845ffb5-fwzk9
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit-cert-manager
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:06 -0600
+Labels:           app=cert-manager
+                  app.kubernetes.io/component=controller
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=cert-manager
+                  app.kubernetes.io/version=v1.6.1
+                  helm.sh/chart=cert-manager-v1.6.1
+                  pod-template-hash=5cb845ffb5
+Annotations:      kubernetes.io/psp: eks.privileged
+                  prometheus.io/path: /metrics
+                  prometheus.io/port: 9402
+                  prometheus.io/scrape: true
+Status:           Running
+IP:               192.168.119.249
+IPs:
+  IP:           192.168.119.249
+Controlled By:  ReplicaSet/analytickit-cert-manager-5cb845ffb5
+Containers:
+  cert-manager:
+    Container ID:  docker://1bbcc5beec0c7a79b44355d718cf6f170c8c79911a67ffa0348a44ce13eb750d
+    Image:         quay.io/jetstack/cert-manager-controller:v1.6.1
+    Image ID:      docker-pullable://quay.io/jetstack/cert-manager-controller@sha256:fef465f62524ed89c27451752385ab69e5c35ea4bc48b62bf61f733916ea674c
+    Port:          9402/TCP
+    Host Port:     0/TCP
+    Args:
+      --v=2
+      --cluster-resource-namespace=$(POD_NAMESPACE)
+      --leader-election-namespace=kube-system
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:38:14 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      POD_NAMESPACE:  analytickit (v1:metadata.namespace)
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-4kggs (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-4kggs:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  48m   default-scheduler  Successfully assigned analytickit/analytickit-cert-manager-5cb845ffb5-fwzk9 to ip-192-168-111-91.ec2.internal
+  Normal  Pulling    48m   kubelet            Pulling image "quay.io/jetstack/cert-manager-controller:v1.6.1"
+  Normal  Pulled     48m   kubelet            Successfully pulled image "quay.io/jetstack/cert-manager-controller:v1.6.1" in 6.993176423s
+  Normal  Created    48m   kubelet            Created container cert-manager
+  Normal  Started    48m   kubelet            Started container cert-manager
+
+
+Name:             analytickit-cert-manager-cainjector-9b8dc98d-ldx8d
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit-cert-manager-cainjector
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:06 -0600
+Labels:           app=cainjector
+                  app.kubernetes.io/component=cainjector
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=cainjector
+                  app.kubernetes.io/version=v1.6.1
+                  helm.sh/chart=cert-manager-v1.6.1
+                  pod-template-hash=9b8dc98d
+Annotations:      kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.108.152
+IPs:
+  IP:           192.168.108.152
+Controlled By:  ReplicaSet/analytickit-cert-manager-cainjector-9b8dc98d
+Containers:
+  cert-manager:
+    Container ID:  docker://a65fb2e7048a8f82793b13f1c215cbde76f44a6bf5ddf1a6111f3fa38a9cff69
+    Image:         quay.io/jetstack/cert-manager-cainjector:v1.6.1
+    Image ID:      docker-pullable://quay.io/jetstack/cert-manager-cainjector@sha256:916ef12af73c8a4cbdfb6127d6f513f476f3aeed2447ec7f1a58a95113bda713
+    Port:          <none>
+    Host Port:     <none>
+    Args:
+      --v=2
+      --leader-election-namespace=kube-system
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:38:13 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      POD_NAMESPACE:  analytickit (v1:metadata.namespace)
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-687s7 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-687s7:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  48m   default-scheduler  Successfully assigned analytickit/analytickit-cert-manager-cainjector-9b8dc98d-ldx8d to ip-192-168-111-91.ec2.internal
+  Normal  Pulling    48m   kubelet            Pulling image "quay.io/jetstack/cert-manager-cainjector:v1.6.1"
+  Normal  Pulled     48m   kubelet            Successfully pulled image "quay.io/jetstack/cert-manager-cainjector:v1.6.1" in 5.241639385s
+  Normal  Created    48m   kubelet            Created container cert-manager
+  Normal  Started    48m   kubelet            Started container cert-manager
+
+
+Name:             analytickit-cert-manager-webhook-7c44665b87-nmtff
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit-cert-manager-webhook
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:06 -0600
+Labels:           app=webhook
+                  app.kubernetes.io/component=webhook
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=webhook
+                  app.kubernetes.io/version=v1.6.1
+                  helm.sh/chart=cert-manager-v1.6.1
+                  pod-template-hash=7c44665b87
+Annotations:      kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.109.200
+IPs:
+  IP:           192.168.109.200
+Controlled By:  ReplicaSet/analytickit-cert-manager-webhook-7c44665b87
+Containers:
+  cert-manager:
+    Container ID:  docker://4270b3e8aab466f45d06d0d65a64c9d6f8133a7587ece7cbaae205fdbba64b77
+    Image:         quay.io/jetstack/cert-manager-webhook:v1.6.1
+    Image ID:      docker-pullable://quay.io/jetstack/cert-manager-webhook@sha256:45934ab42749e8c90da0726734155374f4ea55d7796246264e7adea87569918a
+    Port:          10250/TCP
+    Host Port:     0/TCP
+    Args:
+      --v=2
+      --secure-port=10250
+      --dynamic-serving-ca-secret-namespace=$(POD_NAMESPACE)
+      --dynamic-serving-ca-secret-name=analytickit-cert-manager-webhook-ca
+      --dynamic-serving-dns-names=analytickit-cert-manager-webhook,analytickit-cert-manager-webhook.analytickit,analytickit-cert-manager-webhook.analytickit.svc
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:38:14 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:6080/livez delay=60s timeout=1s period=10s #success=1 #failure=3
+    Readiness:      http-get http://:6080/healthz delay=5s timeout=1s period=5s #success=1 #failure=3
+    Environment:
+      POD_NAMESPACE:  analytickit (v1:metadata.namespace)
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-hx8jc (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-hx8jc:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  48m   default-scheduler  Successfully assigned analytickit/analytickit-cert-manager-webhook-7c44665b87-nmtff to ip-192-168-111-91.ec2.internal
+  Normal  Pulling    48m   kubelet            Pulling image "quay.io/jetstack/cert-manager-webhook:v1.6.1"
+  Normal  Pulled     48m   kubelet            Successfully pulled image "quay.io/jetstack/cert-manager-webhook:v1.6.1" in 6.203040462s
+  Normal  Created    48m   kubelet            Created container cert-manager
+  Normal  Started    48m   kubelet            Started container cert-manager
+
+
+Name:             analytickit-events-769f9c7564-xkz2j
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:07 -0600
+Labels:           app=analytickit
+                  pod-template-hash=769f9c7564
+                  release=analytickit
+                  role=events
+Annotations:      checksum/secrets.yaml: dd3616f379354aa5016ce064605f336f5beed5d14423c2485ffdd87523577697
+                  kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.100.195
+IPs:
+  IP:           192.168.100.195
+Controlled By:  ReplicaSet/analytickit-events-769f9c7564
+Init Containers:
+  wait-for-service-dependencies:
+    Container ID:  docker://109f87431d3893b68642b77117bc37ef51d9e1378205fd18b895bda8b0039216
+    Image:         busybox:1.34
+    Image ID:      docker-pullable://busybox@sha256:59f225fdf34f28a07d22343ee415ee417f6b8365cf4a0d3a2933cbd8fd7cf8c1
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      
+      until (
+          NODES_COUNT=$(wget -qO- \
+              "http://$CLICKHOUSE_USER:$CLICKHOUSE_PASSWORD@clickhouse-analytickit.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local:8123" \
+              --post-data "SELECT count() FROM clusterAllReplicas('analytickit', system, one)"
+          )
+          test ! -z $NODES_COUNT && test $NODES_COUNT -eq 1
+      ); do
+          echo "waiting for all ClickHouse nodes to be available"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-pgbouncer.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 6543); do
+          echo "waiting for PgBouncer"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-analytickit-postgresql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 5432); do
+          echo "waiting for PostgreSQL"; sleep 1;
+      done
+      
+      
+      until (nc -vz "analytickit-analytickit-redis-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" "6379"); do
+          echo "waiting for Redis"; sleep 1;
+      done
+      
+      
+      
+      KAFKA_BROKERS="analytickit-analytickit-kafka:9092"
+      KAFKA_HOST=$(echo $KAFKA_BROKERS | cut -f1 -d:) KAFKA_PORT=$(echo $KAFKA_BROKERS | cut -f2 -d:)
+      until (nc -vz "$KAFKA_HOST.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" $KAFKA_PORT); do
+          echo "waiting for Kafka"; sleep 1;
+      done
+              
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:08 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:08 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      CLICKHOUSE_HOST:      clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:   analytickit
+      CLICKHOUSE_DATABASE:  analytickit
+      CLICKHOUSE_USER:      admin
+      CLICKHOUSE_PASSWORD:  a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:    false
+      CLICKHOUSE_VERIFY:    false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cnc4b (ro)
+  wait-for-migrations:
+    Container ID:  docker://858b0fea685a4f3ec8402245bedb1de333b0aef0c62e6c7315fb6ea45109f513
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      until (python manage.py migrate --check); do
+          echo "Waiting for PostgreSQL database migrations to be completed"; sleep 1;
+      done
+      until (python manage.py migrate_clickhouse --check); do
+          echo "Waiting for ClickHouse database migrations to be completed";
+          sleep 1;
+      done
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:09 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:24 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      ANALYTICKIT_POSTGRES_HOST:  analytickit-pgbouncer
+      ANALYTICKIT_POSTGRES_PORT:  6543
+      ANALYTICKIT_DB_USER:        postgres
+      ANALYTICKIT_DB_NAME:        analytickit
+      ANALYTICKIT_DB_PASSWORD:    <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:            true
+      ANALYTICKIT_REDIS_HOST:     analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:     6379
+      CLICKHOUSE_HOST:            clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:         analytickit
+      CLICKHOUSE_DATABASE:        analytickit
+      CLICKHOUSE_USER:            admin
+      CLICKHOUSE_PASSWORD:        a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:          false
+      CLICKHOUSE_VERIFY:          false
+      SECRET_KEY:                 <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                   https://dpa.analytickit.com
+      DEPLOYMENT:                 helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:   true
+      HELM_INSTALL_INFO:          {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:     json
+      SENTRY_DSN:                 
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cnc4b (ro)
+Containers:
+  analytickit-events:
+    Container ID:  docker://88f732e5d9407dff0dcb1c25fb7e226d39afb3cca593733cca93ddbd10277736
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Ports:         8000/TCP, 8001/TCP
+    Host Ports:    0/TCP, 0/TCP
+    Command:
+      ./bin/docker-server
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:38:25 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:8000/_livez delay=0s timeout=2s period=5s #success=1 #failure=3
+    Readiness:      http-get http://:8000/_readyz%3Frole=events delay=0s timeout=5s period=30s #success=1 #failure=3
+    Startup:        http-get http://:8000/_readyz delay=0s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      KAFKA_HOSTS:                                    analytickit-analytickit-kafka:9092
+      KAFKA_URL:                                      kafka://analytickit-analytickit-kafka:9092
+      ANALYTICKIT_REDIS_HOST:                         analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:                         6379
+      DISABLE_SECURE_SSL_REDIRECT:                    1
+      IS_BEHIND_PROXY:                                1
+      SECRET_KEY:                                     <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                                       https://dpa.analytickit.com
+      DEPLOYMENT:                                     helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:                       true
+      HELM_INSTALL_INFO:                              {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:                         json
+      SENTRY_DSN:                                     
+      PRIMARY_DB:                                     clickhouse
+      ANALYTICKIT_POSTGRES_HOST:                      analytickit-pgbouncer
+      ANALYTICKIT_POSTGRES_PORT:                      6543
+      ANALYTICKIT_DB_USER:                            postgres
+      ANALYTICKIT_DB_NAME:                            analytickit
+      ANALYTICKIT_DB_PASSWORD:                        <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:                                true
+      CLICKHOUSE_HOST:                                clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:                             analytickit
+      CLICKHOUSE_DATABASE:                            analytickit
+      CLICKHOUSE_USER:                                admin
+      CLICKHOUSE_PASSWORD:                            a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:                              false
+      CLICKHOUSE_VERIFY:                              false
+      EMAIL_HOST:                                     
+      EMAIL_PORT:                                     
+      EMAIL_HOST_USER:                                
+      EMAIL_HOST_PASSWORD:                            <set to the key 'smtp-password' in secret 'analytickit'>  Optional: false
+      EMAIL_USE_TLS:                                  true
+      EMAIL_USE_SSL:                                  false
+      DEFAULT_FROM_EMAIL:                             
+      SOCIAL_AUTH_GOOGLE_OAUTH2_KEY:                  
+      SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET:               
+      SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS:  analytickit.com
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cnc4b (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-cnc4b:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  48m                default-scheduler  Successfully assigned analytickit/analytickit-events-769f9c7564-xkz2j to ip-192-168-111-91.ec2.internal
+  Normal   Pulled     48m                kubelet            Container image "busybox:1.34" already present on machine
+  Normal   Created    48m                kubelet            Created container wait-for-service-dependencies
+  Normal   Started    48m                kubelet            Started container wait-for-service-dependencies
+  Normal   Pulled     48m                kubelet            Container image "1007234/analytickit:latest" already present on machine
+  Normal   Created    48m                kubelet            Created container wait-for-migrations
+  Normal   Started    48m                kubelet            Started container wait-for-migrations
+  Normal   Pulling    48m                kubelet            Pulling image "1007234/analytickit:latest"
+  Normal   Pulled     48m                kubelet            Successfully pulled image "1007234/analytickit:latest" in 111.381493ms
+  Normal   Created    48m                kubelet            Created container analytickit-events
+  Normal   Started    48m                kubelet            Started container analytickit-events
+  Warning  Unhealthy  48m (x3 over 48m)  kubelet            Startup probe failed: Get "http://192.168.100.195:8000/_readyz": dial tcp 192.168.100.195:8000: connect: connection refused
+
+
+Name:             analytickit-ingress-nginx-controller-cd845b649-s6f6g
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit-ingress-nginx
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:07:58 -0600
+Labels:           app.kubernetes.io/component=controller
+                  app.kubernetes.io/instance=analytickit
+                  app.kubernetes.io/name=ingress-nginx
+                  pod-template-hash=cd845b649
+Annotations:      kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.126.106
+IPs:
+  IP:           192.168.126.106
+Controlled By:  ReplicaSet/analytickit-ingress-nginx-controller-cd845b649
+Containers:
+  controller:
+    Container ID:  docker://1a213d453909cffbc00fc83549d60ffec53ba5e5f34084bf34a5ca2986f00a0a
+    Image:         k8s.gcr.io/ingress-nginx/controller:v1.1.0@sha256:f766669fdcf3dc26347ed273a55e754b427eb4411ee075a53f30718b4499076a
+    Image ID:      docker-pullable://k8s.gcr.io/ingress-nginx/controller@sha256:f766669fdcf3dc26347ed273a55e754b427eb4411ee075a53f30718b4499076a
+    Ports:         80/TCP, 443/TCP, 8443/TCP
+    Host Ports:    0/TCP, 0/TCP, 0/TCP
+    Args:
+      /nginx-ingress-controller
+      --publish-service=$(POD_NAMESPACE)/analytickit-ingress-nginx-controller
+      --election-id=ingress-controller-leader
+      --controller-class=k8s.io/ingress-nginx
+      --configmap=$(POD_NAMESPACE)/analytickit-ingress-nginx-controller
+      --validating-webhook=:8443
+      --validating-webhook-certificate=/usr/local/certificates/cert
+      --validating-webhook-key=/usr/local/certificates/key
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:08:15 -0600
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      100m
+      memory:   90Mi
+    Liveness:   http-get http://:10254/healthz delay=10s timeout=1s period=10s #success=1 #failure=5
+    Readiness:  http-get http://:10254/healthz delay=10s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      POD_NAME:       analytickit-ingress-nginx-controller-cd845b649-s6f6g (v1:metadata.name)
+      POD_NAMESPACE:  analytickit (v1:metadata.namespace)
+      LD_PRELOAD:     /usr/local/lib/libmimalloc.so
+    Mounts:
+      /usr/local/certificates/ from webhook-cert (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-8mrhq (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  webhook-cert:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  analytickit-ingress-nginx-admission
+    Optional:    false
+  kube-api-access-8mrhq:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              kubernetes.io/os=linux
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason  Age                 From                      Message
+  ----    ------  ----                ----                      -------
+  Normal  RELOAD  47m (x3 over 138m)  nginx-ingress-controller  NGINX reload triggered due to a change in configuration
+
+
+Name:             analytickit-migrate-2022-12-04-15-37-37-dphlp
+Namespace:        analytickit
+Priority:         0
+Service Account:  default
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:08 -0600
+Labels:           app=analytickit
+                  controller-uid=43d4533b-8beb-492a-9848-2d069b45f82c
+                  job-name=analytickit-migrate-2022-12-04-15-37-37
+                  release=analytickit
+Annotations:      checksum/secrets.yaml: dd3616f379354aa5016ce064605f336f5beed5d14423c2485ffdd87523577697
+                  kubernetes.io/psp: eks.privileged
+Status:           Succeeded
+IP:               192.168.120.216
+IPs:
+  IP:           192.168.120.216
+Controlled By:  Job/analytickit-migrate-2022-12-04-15-37-37
+Init Containers:
+  wait-for-service-dependencies:
+    Container ID:  docker://dfe8896c0425c703ce0d81e943b29b589b307bff285405c1d6755929fa35afc0
+    Image:         busybox:1.34
+    Image ID:      docker-pullable://busybox@sha256:59f225fdf34f28a07d22343ee415ee417f6b8365cf4a0d3a2933cbd8fd7cf8c1
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      
+      until (
+          NODES_COUNT=$(wget -qO- \
+              "http://$CLICKHOUSE_USER:$CLICKHOUSE_PASSWORD@clickhouse-analytickit.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local:8123" \
+              --post-data "SELECT count() FROM clusterAllReplicas('analytickit', system, one)"
+          )
+          test ! -z $NODES_COUNT && test $NODES_COUNT -eq 1
+      ); do
+          echo "waiting for all ClickHouse nodes to be available"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-pgbouncer.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 6543); do
+          echo "waiting for PgBouncer"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-analytickit-postgresql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 5432); do
+          echo "waiting for PostgreSQL"; sleep 1;
+      done
+      
+      
+      until (nc -vz "analytickit-analytickit-redis-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" "6379"); do
+          echo "waiting for Redis"; sleep 1;
+      done
+      
+      
+      
+      KAFKA_BROKERS="analytickit-analytickit-kafka:9092"
+      KAFKA_HOST=$(echo $KAFKA_BROKERS | cut -f1 -d:) KAFKA_PORT=$(echo $KAFKA_BROKERS | cut -f2 -d:)
+      until (nc -vz "$KAFKA_HOST.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" $KAFKA_PORT); do
+          echo "waiting for Kafka"; sleep 1;
+      done
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:11 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:11 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      CLICKHOUSE_HOST:      clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:   analytickit
+      CLICKHOUSE_DATABASE:  analytickit
+      CLICKHOUSE_USER:      admin
+      CLICKHOUSE_PASSWORD:  a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:    false
+      CLICKHOUSE_VERIFY:    false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mxxrc (ro)
+Containers:
+  migrate-job:
+    Container ID:  docker://8b97c23385936aa80d4ba2ccfb99a87be70388a96250a65b8e3d3636b9493aa2
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      set -e
+      python manage.py notify_helm_install || true
+      ./bin/migrate
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:13 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:48 -0600
+    Ready:          False
+    Restart Count:  0
+    Environment:
+      KAFKA_HOSTS:                analytickit-analytickit-kafka:9092
+      KAFKA_URL:                  kafka://analytickit-analytickit-kafka:9092
+      ANALYTICKIT_REDIS_HOST:     analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:     6379
+      SECRET_KEY:                 <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                   https://dpa.analytickit.com
+      DEPLOYMENT:                 helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:   true
+      HELM_INSTALL_INFO:          {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:     json
+      SENTRY_DSN:                 
+      PRIMARY_DB:                 clickhouse
+      ANALYTICKIT_POSTGRES_HOST:  analytickit-analytickit-postgresql
+      ANALYTICKIT_POSTGRES_PORT:  5432
+      ANALYTICKIT_DB_USER:        postgres
+      ANALYTICKIT_DB_NAME:        analytickit
+      ANALYTICKIT_DB_PASSWORD:    <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:            false
+      CLICKHOUSE_HOST:            clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:         analytickit
+      CLICKHOUSE_DATABASE:        analytickit
+      CLICKHOUSE_USER:            admin
+      CLICKHOUSE_PASSWORD:        a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:          false
+      CLICKHOUSE_VERIFY:          false
+      EMAIL_HOST:                 
+      EMAIL_PORT:                 
+      EMAIL_HOST_USER:            
+      EMAIL_HOST_PASSWORD:        <set to the key 'smtp-password' in secret 'analytickit'>  Optional: false
+      EMAIL_USE_TLS:              true
+      EMAIL_USE_SSL:              false
+      DEFAULT_FROM_EMAIL:         
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mxxrc (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-mxxrc:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  48m   default-scheduler  Successfully assigned analytickit/analytickit-migrate-2022-12-04-15-37-37-dphlp to ip-192-168-111-91.ec2.internal
+  Normal  Pulled     48m   kubelet            Container image "busybox:1.34" already present on machine
+  Normal  Created    48m   kubelet            Created container wait-for-service-dependencies
+  Normal  Started    48m   kubelet            Started container wait-for-service-dependencies
+  Normal  Pulling    48m   kubelet            Pulling image "1007234/analytickit:latest"
+  Normal  Pulled     48m   kubelet            Successfully pulled image "1007234/analytickit:latest" in 229.178255ms
+  Normal  Created    48m   kubelet            Created container migrate-job
+  Normal  Started    48m   kubelet            Started container migrate-job
+
+
+Name:             analytickit-pgbouncer-5dccffbd55-6vvbv
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:31:59 -0600
+Labels:           app=analytickit
+                  pod-template-hash=5dccffbd55
+                  release=analytickit
+                  role=pgbouncer
+Annotations:      checksum/secrets.yaml: dd3616f379354aa5016ce064605f336f5beed5d14423c2485ffdd87523577697
+                  kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.103.245
+IPs:
+  IP:           192.168.103.245
+Controlled By:  ReplicaSet/analytickit-pgbouncer-5dccffbd55
+Containers:
+  analytickit-pgbouncer:
+    Container ID:   docker://577057ee51f18b11620b82d39fe4b0a8f43bdd8373f50be9b694c0804429498b
+    Image:          bitnami/pgbouncer:1.17.0
+    Image ID:       docker-pullable://bitnami/pgbouncer@sha256:a6a212d72a74c89d8cb4497b0cdc615ef5bd3e1000f0292013f4464f0162410a
+    Port:           6543/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:32:01 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       tcp-socket :6543 delay=60s timeout=2s period=10s #success=1 #failure=3
+    Readiness:      tcp-socket :6543 delay=10s timeout=2s period=5s #success=1 #failure=3
+    Environment:
+      POSTGRESQL_USERNAME:                  postgres
+      POSTGRESQL_PASSWORD:                  <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      POSTGRESQL_DATABASE:                  analytickit
+      POSTGRESQL_HOST:                      analytickit-analytickit-postgresql
+      POSTGRESQL_PORT:                      5432
+      PGBOUNCER_DATABASE:                   analytickit
+      PGBOUNCER_PORT:                       6543
+      PGBOUNCER_MAX_CLIENT_CONN:            1000
+      PGBOUNCER_POOL_MODE:                  transaction
+      PGBOUNCER_IGNORE_STARTUP_PARAMETERS:  extra_float_digits
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5zmj2 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-5zmj2:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  54m   default-scheduler  Successfully assigned analytickit/analytickit-pgbouncer-5dccffbd55-6vvbv to ip-192-168-111-91.ec2.internal
+  Normal  Pulled     54m   kubelet            Container image "bitnami/pgbouncer:1.17.0" already present on machine
+  Normal  Created    54m   kubelet            Created container analytickit-pgbouncer
+  Normal  Started    54m   kubelet            Started container analytickit-pgbouncer
+
+
+Name:             analytickit-plugins-5dcc9c9bf-jhpz8
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:07 -0600
+Labels:           app=analytickit
+                  pod-template-hash=5dcc9c9bf
+                  release=analytickit
+                  role=plugins
+Annotations:      checksum/secrets.yaml: dd3616f379354aa5016ce064605f336f5beed5d14423c2485ffdd87523577697
+                  kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.108.182
+IPs:
+  IP:           192.168.108.182
+Controlled By:  ReplicaSet/analytickit-plugins-5dcc9c9bf
+Init Containers:
+  wait-for-service-dependencies:
+    Container ID:  docker://fd05478f1c1c703a772bf4f34d0080f782044f1559ef901eb39172b433ee6fe0
+    Image:         busybox:1.34
+    Image ID:      docker-pullable://busybox@sha256:59f225fdf34f28a07d22343ee415ee417f6b8365cf4a0d3a2933cbd8fd7cf8c1
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      
+      until (
+          NODES_COUNT=$(wget -qO- \
+              "http://$CLICKHOUSE_USER:$CLICKHOUSE_PASSWORD@clickhouse-analytickit.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local:8123" \
+              --post-data "SELECT count() FROM clusterAllReplicas('analytickit', system, one)"
+          )
+          test ! -z $NODES_COUNT && test $NODES_COUNT -eq 1
+      ); do
+          echo "waiting for all ClickHouse nodes to be available"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-pgbouncer.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 6543); do
+          echo "waiting for PgBouncer"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-analytickit-postgresql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 5432); do
+          echo "waiting for PostgreSQL"; sleep 1;
+      done
+      
+      
+      until (nc -vz "analytickit-analytickit-redis-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" "6379"); do
+          echo "waiting for Redis"; sleep 1;
+      done
+      
+      
+      
+      KAFKA_BROKERS="analytickit-analytickit-kafka:9092"
+      KAFKA_HOST=$(echo $KAFKA_BROKERS | cut -f1 -d:) KAFKA_PORT=$(echo $KAFKA_BROKERS | cut -f2 -d:)
+      until (nc -vz "$KAFKA_HOST.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" $KAFKA_PORT); do
+          echo "waiting for Kafka"; sleep 1;
+      done
+              
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:09 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:09 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      CLICKHOUSE_HOST:      clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:   analytickit
+      CLICKHOUSE_DATABASE:  analytickit
+      CLICKHOUSE_USER:      admin
+      CLICKHOUSE_PASSWORD:  a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:    false
+      CLICKHOUSE_VERIFY:    false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mm7n5 (ro)
+  wait-for-migrations:
+    Container ID:  docker://2e2209f4ea7b973fd58ac59353180981b1052335aff8ee09ef95754942c4b9f3
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      until (python manage.py migrate --check); do
+          echo "Waiting for PostgreSQL database migrations to be completed"; sleep 1;
+      done
+      until (python manage.py migrate_clickhouse --check); do
+          echo "Waiting for ClickHouse database migrations to be completed";
+          sleep 1;
+      done
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:11 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:25 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      ANALYTICKIT_POSTGRES_HOST:  analytickit-pgbouncer
+      ANALYTICKIT_POSTGRES_PORT:  6543
+      ANALYTICKIT_DB_USER:        postgres
+      ANALYTICKIT_DB_NAME:        analytickit
+      ANALYTICKIT_DB_PASSWORD:    <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:            true
+      ANALYTICKIT_REDIS_HOST:     analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:     6379
+      CLICKHOUSE_HOST:            clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:         analytickit
+      CLICKHOUSE_DATABASE:        analytickit
+      CLICKHOUSE_USER:            admin
+      CLICKHOUSE_PASSWORD:        a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:          false
+      CLICKHOUSE_VERIFY:          false
+      SECRET_KEY:                 <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                   https://dpa.analytickit.com
+      DEPLOYMENT:                 helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:   true
+      HELM_INSTALL_INFO:          {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:     json
+      SENTRY_DSN:                 
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mm7n5 (ro)
+Containers:
+  analytickit-plugins:
+    Container ID:  docker://cbf5b6ef1080356752c8f9de6969e81d948788d743b699a6ec082f971a60088d
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Port:          6738/TCP
+    Host Port:     0/TCP
+    Command:
+      ./bin/plugin-server
+      --no-restart-loop
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:38:26 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       exec [true] delay=10s timeout=2s period=10s #success=1 #failure=3
+    Readiness:      http-get http://:6738/_health delay=50s timeout=5s period=30s #success=1 #failure=3
+    Environment:
+      SENTRY_DSN:                 
+      KAFKA_HOSTS:                analytickit-analytickit-kafka:9092
+      KAFKA_URL:                  kafka://analytickit-analytickit-kafka:9092
+      ANALYTICKIT_REDIS_HOST:     analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:     6379
+      SECRET_KEY:                 <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                   https://dpa.analytickit.com
+      DEPLOYMENT:                 helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:   true
+      HELM_INSTALL_INFO:          {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:     json
+      ANALYTICKIT_POSTGRES_HOST:  analytickit-pgbouncer
+      ANALYTICKIT_POSTGRES_PORT:  6543
+      ANALYTICKIT_DB_USER:        postgres
+      ANALYTICKIT_DB_NAME:        analytickit
+      ANALYTICKIT_DB_PASSWORD:    <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:            true
+      CLICKHOUSE_HOST:            clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:         analytickit
+      CLICKHOUSE_DATABASE:        analytickit
+      CLICKHOUSE_USER:            admin
+      CLICKHOUSE_PASSWORD:        a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:          false
+      CLICKHOUSE_VERIFY:          false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mm7n5 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-mm7n5:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  48m   default-scheduler  Successfully assigned analytickit/analytickit-plugins-5dcc9c9bf-jhpz8 to ip-192-168-111-91.ec2.internal
+  Normal  Pulled     48m   kubelet            Container image "busybox:1.34" already present on machine
+  Normal  Created    48m   kubelet            Created container wait-for-service-dependencies
+  Normal  Started    48m   kubelet            Started container wait-for-service-dependencies
+  Normal  Pulled     48m   kubelet            Container image "1007234/analytickit:latest" already present on machine
+  Normal  Created    48m   kubelet            Created container wait-for-migrations
+  Normal  Started    48m   kubelet            Started container wait-for-migrations
+  Normal  Pulling    48m   kubelet            Pulling image "1007234/analytickit:latest"
+  Normal  Pulled     48m   kubelet            Successfully pulled image "1007234/analytickit:latest" in 122.658753ms
+  Normal  Created    48m   kubelet            Created container analytickit-plugins
+  Normal  Started    48m   kubelet            Started container analytickit-plugins
+
+
+Name:             analytickit-web-66c7f88c75-45vwl
+Namespace:        analytickit
+Priority:         0
+Service Account:  analytickit
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 15:38:07 -0600
+Labels:           app=analytickit
+                  pod-template-hash=66c7f88c75
+                  release=analytickit
+                  role=web
+Annotations:      checksum/secrets.yaml: dd3616f379354aa5016ce064605f336f5beed5d14423c2485ffdd87523577697
+                  kubernetes.io/psp: eks.privileged
+Status:           Running
+IP:               192.168.103.24
+IPs:
+  IP:           192.168.103.24
+Controlled By:  ReplicaSet/analytickit-web-66c7f88c75
+Init Containers:
+  wait-for-service-dependencies:
+    Container ID:  docker://cc798ca0eb706c6bc1dca7bbe848057c7746ef0fa7576e70683ac51492a506fc
+    Image:         busybox:1.34
+    Image ID:      docker-pullable://busybox@sha256:59f225fdf34f28a07d22343ee415ee417f6b8365cf4a0d3a2933cbd8fd7cf8c1
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      
+      until (
+          NODES_COUNT=$(wget -qO- \
+              "http://$CLICKHOUSE_USER:$CLICKHOUSE_PASSWORD@clickhouse-analytickit.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local:8123" \
+              --post-data "SELECT count() FROM clusterAllReplicas('analytickit', system, one)"
+          )
+          test ! -z $NODES_COUNT && test $NODES_COUNT -eq 1
+      ); do
+          echo "waiting for all ClickHouse nodes to be available"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-pgbouncer.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 6543); do
+          echo "waiting for PgBouncer"; sleep 1;
+      done
+      
+      until (nc -vz "analytickit-analytickit-postgresql.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" 5432); do
+          echo "waiting for PostgreSQL"; sleep 1;
+      done
+      
+      
+      until (nc -vz "analytickit-analytickit-redis-master.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" "6379"); do
+          echo "waiting for Redis"; sleep 1;
+      done
+      
+      
+      
+      KAFKA_BROKERS="analytickit-analytickit-kafka:9092"
+      KAFKA_HOST=$(echo $KAFKA_BROKERS | cut -f1 -d:) KAFKA_PORT=$(echo $KAFKA_BROKERS | cut -f2 -d:)
+      until (nc -vz "$KAFKA_HOST.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local" $KAFKA_PORT); do
+          echo "waiting for Kafka"; sleep 1;
+      done
+              
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:10 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:10 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      CLICKHOUSE_HOST:      clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:   analytickit
+      CLICKHOUSE_DATABASE:  analytickit
+      CLICKHOUSE_USER:      admin
+      CLICKHOUSE_PASSWORD:  a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:    false
+      CLICKHOUSE_VERIFY:    false
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cmt69 (ro)
+  wait-for-migrations:
+    Container ID:  docker://05201417871e95443237ed174d177bc08e021685d893e168f4c2d88bd751f9c9
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/sh
+      -c
+      until (python manage.py migrate --check); do
+          echo "Waiting for PostgreSQL database migrations to be completed"; sleep 1;
+      done
+      until (python manage.py migrate_clickhouse --check); do
+          echo "Waiting for ClickHouse database migrations to be completed";
+          sleep 1;
+      done
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Sun, 04 Dec 2022 15:38:12 -0600
+      Finished:     Sun, 04 Dec 2022 15:38:28 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      ANALYTICKIT_POSTGRES_HOST:  analytickit-pgbouncer
+      ANALYTICKIT_POSTGRES_PORT:  6543
+      ANALYTICKIT_DB_USER:        postgres
+      ANALYTICKIT_DB_NAME:        analytickit
+      ANALYTICKIT_DB_PASSWORD:    <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:            true
+      ANALYTICKIT_REDIS_HOST:     analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:     6379
+      CLICKHOUSE_HOST:            clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:         analytickit
+      CLICKHOUSE_DATABASE:        analytickit
+      CLICKHOUSE_USER:            admin
+      CLICKHOUSE_PASSWORD:        a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:          false
+      CLICKHOUSE_VERIFY:          false
+      SECRET_KEY:                 <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                   https://dpa.analytickit.com
+      DEPLOYMENT:                 helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:   true
+      HELM_INSTALL_INFO:          {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:     json
+      SENTRY_DSN:                 
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cmt69 (ro)
+Containers:
+  analytickit-web:
+    Container ID:  docker://056d358cf2e9e63c977246eee4635cf361c1f7b4454b232a5bc168ca0c0119b5
+    Image:         1007234/analytickit:latest
+    Image ID:      docker-pullable://1007234/analytickit@sha256:861545d945289b7038c7aad905cb4f5026df5cd33e658465adbddb732b4de7ac
+    Ports:         8000/TCP, 8001/TCP
+    Host Ports:    0/TCP, 0/TCP
+    Command:
+      ./bin/docker-server
+    State:          Running
+      Started:      Sun, 04 Dec 2022 15:38:29 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:8000/_livez delay=0s timeout=2s period=5s #success=1 #failure=3
+    Readiness:      http-get http://:8000/_readyz%3Frole=web delay=0s timeout=5s period=30s #success=1 #failure=3
+    Startup:        http-get http://:8000/_readyz delay=0s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      KAFKA_HOSTS:                                    analytickit-analytickit-kafka:9092
+      KAFKA_URL:                                      kafka://analytickit-analytickit-kafka:9092
+      ANALYTICKIT_REDIS_HOST:                         analytickit-analytickit-redis-master
+      ANALYTICKIT_REDIS_PORT:                         6379
+      DISABLE_SECURE_SSL_REDIRECT:                    1
+      IS_BEHIND_PROXY:                                1
+      SECRET_KEY:                                     <set to the key 'analytickit-secret' in secret 'analytickit'>  Optional: false
+      SITE_URL:                                       https://dpa.analytickit.com
+      DEPLOYMENT:                                     helm_aws_ha
+      CAPTURE_INTERNAL_METRICS:                       true
+      HELM_INSTALL_INFO:                              {"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.23.13-eks-fb459a0","operation":"upgrade","release_name":"analytickit","release_revision":3}
+      LOGGING_FORMATTER_NAME:                         json
+      SENTRY_DSN:                                     
+      SAML_ENTITY_ID:                                 
+      SAML_ACS_URL:                                   
+      SAML_X509_CERT:                                 
+      SAML_ATTR_PERMANENT_ID:                         
+      SAML_ATTR_FIRST_NAME:                           
+      SAML_ATTR_LAST_NAME:                            
+      SAML_ATTR_EMAIL:                                
+      PRIMARY_DB:                                     clickhouse
+      ANALYTICKIT_POSTGRES_HOST:                      analytickit-pgbouncer
+      ANALYTICKIT_POSTGRES_PORT:                      6543
+      ANALYTICKIT_DB_USER:                            postgres
+      ANALYTICKIT_DB_NAME:                            analytickit
+      ANALYTICKIT_DB_PASSWORD:                        <set to the key 'postgresql-password' in secret 'analytickit-analytickit-postgresql'>  Optional: false
+      USING_PGBOUNCER:                                true
+      CLICKHOUSE_HOST:                                clickhouse-analytickit
+      CLICKHOUSE_CLUSTER:                             analytickit
+      CLICKHOUSE_DATABASE:                            analytickit
+      CLICKHOUSE_USER:                                admin
+      CLICKHOUSE_PASSWORD:                            a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+      CLICKHOUSE_SECURE:                              false
+      CLICKHOUSE_VERIFY:                              false
+      EMAIL_HOST:                                     
+      EMAIL_PORT:                                     
+      EMAIL_HOST_USER:                                
+      EMAIL_HOST_PASSWORD:                            <set to the key 'smtp-password' in secret 'analytickit'>  Optional: false
+      EMAIL_USE_TLS:                                  true
+      EMAIL_USE_SSL:                                  false
+      DEFAULT_FROM_EMAIL:                             
+      SOCIAL_AUTH_GOOGLE_OAUTH2_KEY:                  
+      SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET:               
+      SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS:  analytickit.com
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cmt69 (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-cmt69:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  48m                default-scheduler  Successfully assigned analytickit/analytickit-web-66c7f88c75-45vwl to ip-192-168-111-91.ec2.internal
+  Normal   Pulled     48m                kubelet            Container image "busybox:1.34" already present on machine
+  Normal   Created    48m                kubelet            Created container wait-for-service-dependencies
+  Normal   Started    48m                kubelet            Started container wait-for-service-dependencies
+  Normal   Pulled     48m                kubelet            Container image "1007234/analytickit:latest" already present on machine
+  Normal   Created    48m                kubelet            Created container wait-for-migrations
+  Normal   Started    48m                kubelet            Started container wait-for-migrations
+  Normal   Pulling    48m                kubelet            Pulling image "1007234/analytickit:latest"
+  Normal   Pulled     48m                kubelet            Successfully pulled image "1007234/analytickit:latest" in 118.946051ms
+  Normal   Created    48m                kubelet            Created container analytickit-web
+  Normal   Started    48m                kubelet            Started container analytickit-web
+  Warning  Unhealthy  48m (x2 over 48m)  kubelet            Startup probe failed: Get "http://192.168.103.24:8000/_readyz": dial tcp 192.168.103.24:8000: connect: connection refused
+
+
+Name:             chi-analytickit-analytickit-0-0-0
+Namespace:        analytickit
+Priority:         0
+Service Account:  default
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:08:29 -0600
+Labels:           app.kubernetes.io/managed-by=Helm
+                  clickhouse.altinity.com/app=chop
+                  clickhouse.altinity.com/chi=analytickit
+                  clickhouse.altinity.com/cluster=analytickit
+                  clickhouse.altinity.com/namespace=analytickit
+                  clickhouse.altinity.com/ready=yes
+                  clickhouse.altinity.com/replica=0
+                  clickhouse.altinity.com/settings-version=5e1056aff7214bbbc455108f0283ad846ba69476
+                  clickhouse.altinity.com/shard=0
+                  clickhouse.altinity.com/zookeeper-version=4c1dd4d7a8b3efcbe6caa25b80ff3d0c89f4b5d9
+                  controller-revision-hash=chi-analytickit-analytickit-0-0-5cb74f6d44
+                  statefulset.kubernetes.io/pod-name=chi-analytickit-analytickit-0-0-0
+Annotations:      kubernetes.io/psp: eks.privileged
+                  meta.helm.sh/release-name: analytickit
+                  meta.helm.sh/release-namespace: analytickit
+Status:           Running
+IP:               192.168.122.185
+IPs:
+  IP:           192.168.122.185
+Controlled By:  StatefulSet/chi-analytickit-analytickit-0-0
+Containers:
+  clickhouse:
+    Container ID:  docker://a2f4b4f2bcad07c68851c335a0e6c5d9cecdf5d88e42d3a7480589527f63c105
+    Image:         clickhouse/clickhouse-server:22.3.13.80
+    Image ID:      docker-pullable://clickhouse/clickhouse-server@sha256:3d888e3de9d5a591659635109e132c2a974f7132ca97d72453c46b02cd597a0a
+    Ports:         8123/TCP, 9000/TCP, 9009/TCP, 9000/TCP
+    Host Ports:    0/TCP, 0/TCP, 0/TCP, 0/TCP
+    Command:
+      /bin/bash
+      -c
+      /usr/bin/clickhouse-server --config-file=/etc/clickhouse-server/config.xml
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:09:27 -0600
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:http/ping delay=60s timeout=1s period=3s #success=1 #failure=10
+    Readiness:      http-get http://:http/ping delay=10s timeout=1s period=3s #success=1 #failure=3
+    Environment:    <none>
+    Mounts:
+      /etc/clickhouse-server/conf.d/ from chi-analytickit-deploy-confd-analytickit-0-0 (rw)
+      /etc/clickhouse-server/config.d/ from chi-analytickit-common-configd (rw)
+      /etc/clickhouse-server/users.d/ from chi-analytickit-common-usersd (rw)
+      /var/lib/clickhouse from data-volumeclaim-template (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-svtbw (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  data-volumeclaim-template:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-volumeclaim-template-chi-analytickit-analytickit-0-0-0
+    ReadOnly:   false
+  chi-analytickit-common-configd:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      chi-analytickit-common-configd
+    Optional:  false
+  chi-analytickit-common-usersd:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      chi-analytickit-common-usersd
+    Optional:  false
+  chi-analytickit-deploy-confd-analytickit-0-0:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      chi-analytickit-deploy-confd-analytickit-0-0
+    Optional:  false
+  kube-api-access-svtbw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             clickhouse-operator-6596b78d59-dbd9q
+Namespace:        analytickit
+Priority:         0
+Service Account:  clickhouse-operator
+Node:             ip-192-168-111-91.ec2.internal/192.168.111.91
+Start Time:       Sun, 04 Dec 2022 14:07:58 -0600
+Labels:           app=clickhouse-operator
+                  clickhouse.altinity.com/app=chop
+                  clickhouse.altinity.com/chop=0.19.0
+                  clickhouse.altinity.com/chop-commit=7f5ee13
+                  clickhouse.altinity.com/chop-date=2022-07-14T22.58.34
+                  pod-template-hash=6596b78d59
+Annotations:      kubernetes.io/psp: eks.privileged
+                  prometheus.io/port: 8888
+                  prometheus.io/scrape: true
+Status:           Running
+IP:               192.168.96.177
+IPs:
+  IP:           192.168.96.177
+Controlled By:  ReplicaSet/clickhouse-operator-6596b78d59
+Containers:
+  clickhouse-operator:
+    Container ID:   docker://fffd0abbdb7ecbf9a27815eed9e8a430e37a0a864479892764b77d8e1adc455b
+    Image:          altinity/clickhouse-operator:0.19.0
+    Image ID:       docker-pullable://altinity/clickhouse-operator@sha256:5d0bdca5f7f439f81064026eace17b004e6915dd895b0998d7f882e1a3afed2b
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:08:12 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:
+      OPERATOR_POD_NODE_NAME:           (v1:spec.nodeName)
+      OPERATOR_POD_NAME:               clickhouse-operator-6596b78d59-dbd9q (v1:metadata.name)
+      OPERATOR_POD_NAMESPACE:          analytickit (v1:metadata.namespace)
+      OPERATOR_POD_IP:                  (v1:status.podIP)
+      OPERATOR_POD_SERVICE_ACCOUNT:     (v1:spec.serviceAccountName)
+      OPERATOR_CONTAINER_CPU_REQUEST:  0 (requests.cpu)
+      OPERATOR_CONTAINER_CPU_LIMIT:    node allocatable (limits.cpu)
+      OPERATOR_CONTAINER_MEM_REQUEST:  0 (requests.memory)
+      OPERATOR_CONTAINER_MEM_LIMIT:    node allocatable (limits.memory)
+    Mounts:
+      /etc/clickhouse-operator from etc-clickhouse-operator-folder (rw)
+      /etc/clickhouse-operator/conf.d from etc-clickhouse-operator-confd-folder (rw)
+      /etc/clickhouse-operator/config.d from etc-clickhouse-operator-configd-folder (rw)
+      /etc/clickhouse-operator/templates.d from etc-clickhouse-operator-templatesd-folder (rw)
+      /etc/clickhouse-operator/users.d from etc-clickhouse-operator-usersd-folder (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-klxnx (ro)
+  metrics-exporter:
+    Container ID:   docker://73880f7b1b7d0340a3024356a63f061b0208cc1648476db2573db12a9a3c53e7
+    Image:          altinity/metrics-exporter:latest
+    Image ID:       docker-pullable://altinity/metrics-exporter@sha256:4037a61aa7ebba4ff6aba032e08455824f56da423562458b92892d0ab05951b0
+    Port:           8888/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sun, 04 Dec 2022 14:08:19 -0600
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /etc/clickhouse-operator from etc-clickhouse-operator-folder (rw)
+      /etc/clickhouse-operator/conf.d from etc-clickhouse-operator-confd-folder (rw)
+      /etc/clickhouse-operator/config.d from etc-clickhouse-operator-configd-folder (rw)
+      /etc/clickhouse-operator/templates.d from etc-clickhouse-operator-templatesd-folder (rw)
+      /etc/clickhouse-operator/users.d from etc-clickhouse-operator-usersd-folder (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-klxnx (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  etc-clickhouse-operator-folder:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      etc-clickhouse-operator-files
+    Optional:  false
+  etc-clickhouse-operator-confd-folder:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      etc-clickhouse-operator-confd-files
+    Optional:  false
+  etc-clickhouse-operator-configd-folder:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      etc-clickhouse-operator-configd-files
+    Optional:  false
+  etc-clickhouse-operator-templatesd-folder:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      etc-clickhouse-operator-templatesd-files
+    Optional:  false
+  etc-clickhouse-operator-usersd-folder:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      etc-clickhouse-operator-usersd-files
+    Optional:  false
+  kube-api-access-klxnx:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>

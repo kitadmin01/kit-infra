@@ -1,14 +1,14 @@
 {{/* Common Redis ENV variables */}}
 {{- define "snippet.redis-env" }}
 
-- name: POSTHOG_REDIS_HOST
+- name: ANALYTICKIT_REDIS_HOST
   value: {{ include "analytickit.redis.host" . }}
 
-- name: POSTHOG_REDIS_PORT
+- name: ANALYTICKIT_REDIS_PORT
   value: {{ include "analytickit.redis.port" . }}
 
 {{- if (include "analytickit.redis.auth.enabled" .) }}
-- name: POSTHOG_REDIS_PASSWORD
+- name: ANALYTICKIT_REDIS_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ include "analytickit.redis.secretName" . }}

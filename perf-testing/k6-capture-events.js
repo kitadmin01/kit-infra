@@ -17,7 +17,7 @@ export let options = {
 
 export default function () {
   const res = http.post(
-    `${__ENV.POSTHOG_URL}/e/`,
+    `${__ENV.ANALYTICKIT_URL}/e/`,
     JSON.stringify({
       api_key: __ENV.API_KEY,
       event: "k6s_custom_event",

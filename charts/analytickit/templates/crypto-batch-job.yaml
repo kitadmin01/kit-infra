@@ -1,0 +1,52 @@
+{{- if .Values.cryptoCron.enabled }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: crypto-cron
+spec:
+  schedule: {{ .Values.cryptoCron.schedule | quote }}
+  jobTemplate:
+    spec:
+      backoffLimit: {{ .Values.cryptoCron.retries }}
+      template:
+        spec:
+          containers:
+          - name: run-crypto-cron
+            image: {{ .Values.cryptoCron.image.repository }}:{{ .Values.cryptoCron.image.tag }}
+            command: ["/bin/sh", "./analytickit/crypto/run_crypto.sh"]
+            env:
+            # AWS credentials from Kubernetes secret
+            # first run kubectl create secret generic aws-creds --from-literal=AWS_ACCESS_KEY_ID=your_access_key --from-literal=AWS_SECRET_ACCESS_KEY=your_secret_key
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: aws-creds
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-creds
+                  key: AWS_SECRET_ACCESS_KEY
+            # Kafka env variables
+            {{- include "snippet.kafka-env" . | nindent 12 }}
+            # Object Storage env variables
+            {{- include "snippet.objectstorage-env" . | nindent 12 }}
+            # Redis env variables
+            {{- include "snippet.redis-env" . | nindent 12 }}
+            # statsd env variables
+            {{- include "snippet.statsd-env" . | nindent 12 }}
+            - name: PRIMARY_DB
+              value: clickhouse
+            {{- include "snippet.analytickit-env" . | nindent 12 }}
+            {{- include "snippet.analytickit-sentry-env" . | nindent 12 }}
+            {{- include "snippet.postgresql-env" . | nindent 12 }}
+            {{- include "snippet.clickhouse-env" . | nindent 12 }}
+            {{- include "snippet.email-env" . | nindent 12 }}
+            {{- if .Values.env }}
+            {{ toYaml .Values.env | nindent 12 }}
+            {{- end }}
+            {{- if .Values.cryptoCron.env }}
+            {{ toYaml .Values.cryptoCron.env | nindent 12 }}
+            {{- end }}
+          restartPolicy: Never
+{{- end }}

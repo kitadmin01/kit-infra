@@ -125,9 +125,9 @@ jobs:
 
       - name: Set AnalyticKit endpoints to use for the ingestion test
         run: |
-          POSTHOG_INGRESS=$(kubectl get --namespace analytickit ingress analytickit -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
-          echo "POSTHOG_API_ENDPOINT=http://${POSTHOG_INGRESS}" | tee -a "$GITHUB_ENV"
-          echo "POSTHOG_EVENT_ENDPOINT=http://${POSTHOG_INGRESS}" | tee -a "$GITHUB_ENV"
+          ANALYTICKIT_INGRESS=$(kubectl get --namespace analytickit ingress analytickit -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+          echo "ANALYTICKIT_API_ENDPOINT=http://${ANALYTICKIT_INGRESS}" | tee -a "$GITHUB_ENV"
+          echo "ANALYTICKIT_EVENT_ENDPOINT=http://${ANALYTICKIT_INGRESS}" | tee -a "$GITHUB_ENV"
 
           # Skip the source ip address check in ingestion-test.js
           echo "SKIP_SOURCE_IP_ADDRESS_CHECK=true" | tee -a "$GITHUB_ENV"

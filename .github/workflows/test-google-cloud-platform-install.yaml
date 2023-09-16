@@ -171,8 +171,8 @@ jobs:
 
     - name: Set AnalyticKit endpoints to use for the ingestion test
       run: |
-        echo "POSTHOG_API_ENDPOINT=https://${{ steps.vars.outputs.fqdn_record }}" | tee -a "$GITHUB_ENV"
-        echo "POSTHOG_EVENT_ENDPOINT=https://${{ steps.vars.outputs.fqdn_record }}" | tee -a "$GITHUB_ENV"
+        echo "ANALYTICKIT_API_ENDPOINT=https://${{ steps.vars.outputs.fqdn_record }}" | tee -a "$GITHUB_ENV"
+        echo "ANALYTICKIT_EVENT_ENDPOINT=https://${{ steps.vars.outputs.fqdn_record }}" | tee -a "$GITHUB_ENV"
 
     #
     # TODO: the GCE Ingress is not picking up health check from readiness probe definition and it's using '/'
@@ -207,20 +207,20 @@ jobs:
         #
         # analytickit-events
         #
-        POSTHOG_EVENTS_NEG_INFO=$(kubectl get svc -n analytickit analytickit-events -o json | jq --raw-output '.["metadata"]["annotations"]["cloud.google.com/neg-status"]')
-        POSTHOG_EVENTS_NEG_NAME=$(echo "$POSTHOG_EVENTS_NEG_INFO" | jq --raw-output '.["network_endpoint_groups"]["8000"]')
-        IFS=" " read -r -a POSTHOG_EVENTS_NEG_ZONES <<< "$(echo "$POSTHOG_EVENTS_NEG_INFO" | jq --raw-output '.["zones"] | join(",")')"
-        echo "analytickit_events_neg_name=${POSTHOG_EVENTS_NEG_NAME}"
-        echo "analytickit_events_neg_zones=${POSTHOG_EVENTS_NEG_ZONES[@]}"
+        ANALYTICKIT_EVENTS_NEG_INFO=$(kubectl get svc -n analytickit analytickit-events -o json | jq --raw-output '.["metadata"]["annotations"]["cloud.google.com/neg-status"]')
+        ANALYTICKIT_EVENTS_NEG_NAME=$(echo "$ANALYTICKIT_EVENTS_NEG_INFO" | jq --raw-output '.["network_endpoint_groups"]["8000"]')
+        IFS=" " read -r -a ANALYTICKIT_EVENTS_NEG_ZONES <<< "$(echo "$ANALYTICKIT_EVENTS_NEG_INFO" | jq --raw-output '.["zones"] | join(",")')"
+        echo "analytickit_events_neg_name=${ANALYTICKIT_EVENTS_NEG_NAME}"
+        echo "analytickit_events_neg_zones=${ANALYTICKIT_EVENTS_NEG_ZONES[@]}"
 
         #
         # analytickit-web
         #
-        POSTHOG_WEB_NEG_INFO=$(kubectl get svc -n analytickit analytickit-web -o json | jq --raw-output '.["metadata"]["annotations"]["cloud.google.com/neg-status"]')
-        POSTHOG_WEB_NEG_NAME=$(echo "$POSTHOG_WEB_NEG_INFO" | jq --raw-output '.["network_endpoint_groups"]["8000"]')
-        IFS=" " read -r -a POSTHOG_WEB_NEG_ZONES <<< "$(echo "$POSTHOG_WEB_NEG_INFO" | jq --raw-output '.["zones"] | join(",")')"
-        echo "analytickit_web_neg_name=${POSTHOG_WEB_NEG_NAME}"
-        echo "analytickit_web_neg_zones=${POSTHOG_WEB_NEG_ZONES[@]}"
+        ANALYTICKIT_WEB_NEG_INFO=$(kubectl get svc -n analytickit analytickit-web -o json | jq --raw-output '.["metadata"]["annotations"]["cloud.google.com/neg-status"]')
+        ANALYTICKIT_WEB_NEG_NAME=$(echo "$ANALYTICKIT_WEB_NEG_INFO" | jq --raw-output '.["network_endpoint_groups"]["8000"]')
+        IFS=" " read -r -a ANALYTICKIT_WEB_NEG_ZONES <<< "$(echo "$ANALYTICKIT_WEB_NEG_INFO" | jq --raw-output '.["zones"] | join(",")')"
+        echo "analytickit_web_neg_name=${ANALYTICKIT_WEB_NEG_NAME}"
+        echo "analytickit_web_neg_zones=${ANALYTICKIT_WEB_NEG_ZONES[@]}"
 
     - name: Delete the k8s cluster and all the associated resources
       if: ${{ always() && steps.k8s_cluster_creation.outcome == 'success' }}
