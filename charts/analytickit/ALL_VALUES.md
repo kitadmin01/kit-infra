@@ -11,13 +11,13 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cloud | string | `"aws"` | Cloud service being deployed on (example: `aws`, `azure`, `do`, `gcp`, `other`). |
-| notificationEmail | string | `nil` | Notification email for notifications to be sent to from the AnalyticKit stack |
-| siteUrl | string | `"dpa.analytickit.com"` |  |
-| image.repository | string | `"analytickit/analytickit"` | AnalyticKit image repository to use. |
+| notificationEmail | string | `"analytickit@gmail.com"` | Notification email for notifications to be sent to from the AnalyticKit stack |
+| siteUrl | string | `"https://dpa.analytickit.com"` |  |
+| image.repository | string | `"1007234/analytickit"` | AnalyticKit image repository to use. |
 | image.sha | string | `nil` | AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`). |
 | image.tag | string | `nil` | AnalyticKit image tag to use (example: `release-1.35.0`). |
-| image.default | string | `":release-1.41.3"` | AnalyticKit default image. Do not overwrite, use `image.sha` or `image.tag` instead. |
-| image.pullPolicy | string | `"IfNotPresent"` | AnalyticKit image pull policy. |
+| image.default | string | `":latest"` | AnalyticKit default image. Do not overwrite, use `image.sha` or `image.tag` instead. |
+| image.pullPolicy | string | `"Always"` | AnalyticKit image pull policy. |
 | sentryDSN | string | `nil` | Sentry endpoint to send errors to. |
 | analytickitSecretKey.existingSecret | string | `nil` | Specify that the key should be pulled from an existing secret key. By default the chart will generate a secret and create a Kubernetes Secret containing it. |
 | analytickitSecretKey.existingSecretKey | string | `"analytickit-secret"` | Specify the key within the secret from which SECRET_KEY should be taken. |
@@ -41,7 +41,7 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | web.hpa.maxpods | int | `10` | Max pods for the web stack HorizontalPodAutoscaler. |
 | web.hpa.behavior | string | `nil` | Set the HPA behavior. See https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/ for configuration options |
 | web.resources | object | `{}` | Resource limits for web service. |
-| web.env | list | `[{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_KEY","value":null},{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET","value":null},{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS","value":"analytickit.com"}]` | Additional env variables to inject into the web stack deployment. |
+| web.env | list | `[{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_KEY","value":null},{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET","value":null},{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS","value":"analytickit.com"},{"name":"SELF_CAPTURE","value":""},{"name":"DEBUG_QUERIES","value":"1"}]` | Additional env variables to inject into the web stack deployment. |
 | web.env[0] | object | `{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_KEY","value":null}` | Set google oauth 2 key. Requires analytickit ee license. |
 | web.env[1] | object | `{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET","value":null}` | Set google oauth 2 secret. Requires analytickit ee license. |
 | web.env[2] | object | `{"name":"SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS","value":"analytickit.com"}` | Set google oauth 2 whitelisted domains users can log in from. |
@@ -67,7 +67,7 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | web.startupProbe.timeoutSeconds | int | `5` | The startup probe timeout seconds |
 | web.securityContext | object | `{"enabled":false}` | Container security context for web stack deployment. |
 | web.podSecurityContext | object | `{"enabled":false}` | Pod security context for web stack deployment. |
-| worker.enabled | bool | `true` | Whether to install the AnalyticKit worker stack or not. |
+| worker.enabled | bool | `true` | Whether to install the AnalyticKit worker stack or not. Worker is used to run background tasks in seperate pod |
 | worker.replicacount | int | `1` | Count of worker pods to run. This setting is ignored if `worker.hpa.enabled` is set to `true`. |
 | worker.hpa.enabled | bool | `false` | Whether to create a HorizontalPodAutoscaler for the worker stack. |
 | worker.hpa.cputhreshold | int | `60` | CPU threshold percent for the worker stack HorizontalPodAutoscaler. |
@@ -257,23 +257,24 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | service.annotations | object | `{}` | AnalyticKit service annotations. |
 | cert-manager.enabled | bool | `false` | Whether to install `cert-manager` resources. |
 | cert-manager.installCRDs | bool | `true` | Whether to install `cert-manager` CRDs. |
-| cert-manager.email | string | `nil` | Base default is noreply@<your-ingress-hostname> |
+| cert-manager.email | string | `"analytickit@gmail.com"` | Base default is noreply@<your-ingress-hostname> |
 | cert-manager.podDnsPolicy | string | `"None"` |  |
 | cert-manager.podDnsConfig.nameservers[0] | string | `"8.8.8.8"` |  |
 | cert-manager.podDnsConfig.nameservers[1] | string | `"1.1.1.1"` |  |
 | cert-manager.podDnsConfig.nameservers[2] | string | `"208.67.222.222"` |  |
 | ingress.enabled | bool | `true` | Enable ingress controller resource |
 | ingress.type | string | `nil` | Ingress handler type. Defaults to `nginx` if nginx is enabled and to `clb` on gcp. |
-| ingress.hostname | string | `nil` | URL to address your AnalyticKit installation. You will need to set up DNS after installation |
+| ingress.hostname | string | `"dpa.analytickit.com"` | URL to address your AnalyticKit installation. You will need to set up DNS after installation |
 | ingress.gcp.ip_name | string | `"analytickit"` | Specifies the name of the global IP address resource to be associated with the google clb |
 | ingress.gcp.forceHttps | bool | `true` | If true, will force a https redirect when accessed over http |
 | ingress.gcp.secretName | string | `""` | Specifies the name of the tls secret to be used by the ingress. If not specified a managed certificate will be generated. |
 | ingress.letsencrypt | string | `nil` | Whether to enable letsencrypt. Defaults to true if hostname is defined and nginx and cert-manager are enabled otherwise false. |
-| ingress.nginx.enabled | bool | `false` | Whether nginx is enabled |
+| ingress.nginx.enabled | bool | `true` | Whether nginx is enabled |
 | ingress.nginx.redirectToTLS | bool | `true` | Whether to redirect to TLS with nginx ingress. |
 | ingress.annotations | object | `{}` | Extra annotations |
 | ingress.secretName | string | `nil` | TLS secret to be used by the ingress. |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | [ingress-nginx documentation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-forwarded-headers) |
+| ingress-nginx.controller.config.proxy_ssl_server_name | string | `"on"` |  |
 | ingress-nginx.controller.config.log-format-escape-json | string | `"true"` |  |
 | ingress-nginx.controller.config.log-format-upstream | string | `"{ \"time\": \"$time_iso8601\", \"remote_addr\": \"$proxy_protocol_addr\", \"request_id\": \"$request_id\", \"correlation_id\": \"$request_id\", \"remote_user\": \"$remote_user\", \"bytes_sent\": $bytes_sent, \"request_time\": $request_time, \"status\": $status, \"host\": \"$host\", \"request_proto\": \"$server_protocol\", \"uri\": \"$uri\", \"request_query\": \"$args\", \"request_length\": $request_length, \"duration\": $request_time, \"method\": \"$request_method\", \"http_referrer\": \"$http_referer\", \"http_user_agent\": \"$http_user_agent\", \"http_x_forwarded_for\": \"$http_x_forwarded_for\" }"` |  |
 | ingress-nginx.controller.proxySetHeaders.X-Correlation-ID | string | `"$request_id"` |  |
@@ -522,6 +523,13 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | prometheus-redis-exporter.enabled | bool | `false` | Whether to install the `prometheus-redis-exporter` or not. |
 | prometheus-redis-exporter.annotations | object | `{"prometheus.io/path":"/metrics","prometheus.io/port":"9121","prometheus.io/scrape":"true"}` | Map of annotations to add to the pods. |
 | prometheus-redis-exporter.redisAddress | string | `"redis://analytickit-analytickit-redis-master:6379"` | Specify the target Redis instance to monitor. |
+| cryptoCron.enabled | bool | `true` |  |
+| cryptoCron.schedule | string | `"0 1 * * *"` |  |
+| cryptoCron.image.repository | string | `"1007234/analytickit"` |  |
+| cryptoCron.image.tag | string | `"latest"` |  |
+| cryptoCron.retries | int | `3` |  |
+| cryptoCron.emailOnError | string | `"test@test.com"` |  |
+| cryptoCron.logRetentionDays | int | `7` |  |
 | installCustomStorageClass | bool | `false` |  |
 | busybox.image | string | `"busybox:1.34"` | Specify the image to use for e.g. init containers |
 | busybox.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
