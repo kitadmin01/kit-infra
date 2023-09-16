@@ -5,8 +5,8 @@ import { URL } from './lib/url_1_0_0.js'
 import { describe } from './lib/expect_0_0_5.js';
 import { isPrivateIP } from './utils.js'
 import {
-  POSTHOG_API_ENDPOINT,
-  POSTHOG_EVENT_ENDPOINT,
+  ANALYTICKIT_API_ENDPOINT,
+  ANALYTICKIT_EVENT_ENDPOINT,
   SKIP_SOURCE_IP_ADDRESS_CHECK,
   checkPrerequisites
 } from './common.js';
@@ -44,7 +44,7 @@ export let options = {
 }
 
 export function generateEvents() {
-  const URI = new URL(`${POSTHOG_EVENT_ENDPOINT}/e/`)
+  const URI = new URL(`${ANALYTICKIT_EVENT_ENDPOINT}/e/`)
 
   const res = http.post(URI.toString(), JSON.stringify({
     api_key: 'e2e_token_1239',
@@ -60,7 +60,7 @@ export function checkEvents() {
 
   success = describe('Check the count of events ingested', (t) => {
 
-    const URI = new URL(`${POSTHOG_API_ENDPOINT}/api/projects/@current/insights/trend/?events=[{"id":"k6s_custom_event","type":"events"}]&refresh=true`)
+    const URI = new URL(`${ANALYTICKIT_API_ENDPOINT}/api/projects/@current/insights/trend/?events=[{"id":"k6s_custom_event","type":"events"}]&refresh=true`)
     const res = http.get(URI.toString(), {
       headers: {
         Authorization: `Bearer e2e_demo_api_key`
@@ -83,7 +83,7 @@ export function checkEvents() {
   // success = describe('Check onEvent called enough times', (t) => {
 
   //   // :TRICKY: We generate there being a plugin generating $pluginEvent events, see setup_ingestion_test.sh
-  //   const URI = new URL(`${POSTHOG_API_ENDPOINT}/api/projects/@current/events/?event=$pluginEvent`)
+  //   const URI = new URL(`${ANALYTICKIT_API_ENDPOINT}/api/projects/@current/events/?event=$pluginEvent`)
   //   const res = http.get(URI.toString(), {
   //     headers: {
   //       Authorization: `Bearer e2e_demo_api_key`
@@ -102,7 +102,7 @@ export function checkEvents() {
   if (!SKIP_SOURCE_IP_ADDRESS_CHECK) {
     success = describe('Check if the source IP address of a random ingested event is not part of a private range', (t) => {
 
-      const URI = new URL(`${POSTHOG_API_ENDPOINT}/api/projects/@current/events/?event=k6s_custom_event`)
+      const URI = new URL(`${ANALYTICKIT_API_ENDPOINT}/api/projects/@current/events/?event=k6s_custom_event`)
       const res = http.get(URI.toString(), {
         headers: {
           Authorization: `Bearer e2e_demo_api_key`

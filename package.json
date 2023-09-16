@@ -1,6 +1,6 @@
 {
   "name": "charts-clickhouse",
-  "repository": "git@github.com:AnalyticKit/charts-clickhouse.git",
+  "repository": "git@github.com:kitadmin01/kit-infra",
   "dependencies": {
     "eslint": "^8.27.0"
   }
