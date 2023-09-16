@@ -5,7 +5,7 @@ cloud: aws
 notificationEmail: analytickit@gmail.com
 # -- Site url specifies the canonical URL root the site can be accessed using.
 # This is used to e.g. generate shareable links to Dashboards.
-siteUrl:  analytickit.com
+siteUrl:  https://dpa.analytickit.com
 
 image:
   # -- AnalyticKit image repository to use.
@@ -14,7 +14,7 @@ image:
   #imageCredentials:
   #registry: github.com
   #username: kitadmin01
-  #password: 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
+  #password:
   #email: analytickit@gmail.com
   # -- AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`).
   sha:
@@ -23,7 +23,7 @@ image:
   # -- AnalyticKit default image. Do not overwrite, use `image.sha` or `image.tag` instead.
   default: ":latest"
   # -- AnalyticKit image pull policy.
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 # -- Sentry endpoint to send errors to.
 sentryDSN:
@@ -111,6 +111,14 @@ web:
 
   # -- Additional env variables to inject into the web stack deployment.
   env:
+    #- name: ALLOWED_IP_BLOCKS
+    #  value: "24.183.125.107"
+    #- name: IS_BEHIND_PROXY
+    #  value: "true"
+    #- name: TRUST_ALL_PROXIES
+    #  value: "true"
+    #- name: SECURE_COOKIES
+    #  value: "true"
     # -- Set google oauth 2 key. Requires analytickit ee license.
     - name: SOCIAL_AUTH_GOOGLE_OAUTH2_KEY
       value:
@@ -120,6 +128,14 @@ web:
     # -- Set google oauth 2 whitelisted domains users can log in from.
     - name: SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS
       value: "analytickit.com"
+    # added to fix project_api_key error, value not set to make JS_ANALYTICKIT_SELF_CAPTURE false
+    - name: SELF_CAPTURE
+      value: ""
+    # added on July 7th 2023
+    - name: DEBUG_QUERIES
+      value: "1"      
+      
+
 
   internalMetrics:
     # -- Whether to capture information on operation of analytickit into analytickit, exposed in /instance/status page
@@ -179,6 +195,7 @@ web:
 
 worker:
   # -- Whether to install the AnalyticKit worker stack or not.
+  # Worker is used to run background tasks in seperate pod
   enabled: true
 
   # -- Count of worker pods to run. This setting is ignored if `worker.hpa.enabled` is set to `true`.
@@ -743,7 +760,7 @@ service:
 ###
 cert-manager:
   # -- Whether to install `cert-manager` resources.
-  enabled: true
+  enabled: false
   # -- Whether to install `cert-manager` CRDs.
   installCRDs: true
   # -- Who to email if the certificate is about to expire
@@ -812,6 +829,13 @@ ingress-nginx:
       # -- downstream proxy is using a secure connection. See the official
       # -- [ingress-nginx documentation](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#use-forwarded-headers)
       use-forwarded-headers: "true"
+      # use-proxy-protocol: "true" this setting errors with handshake failure in cloudfalre
+      # proxy_pass: "http://127.0.0.1:8000"
+      # proxy_ssl_name: "dpa.analytickit.com"
+      proxy_ssl_server_name: "on"
+      # proxy_redirect: "off"
+
+
 
       # Use JSON format for logs, such that we can easily parse them in e.g. Promtail
       #
@@ -853,8 +877,14 @@ ingress-nginx:
     #
     # If using behind an AWS ALB you can set this to $http_x_amzn_trace_id such
     # that you can correlate with ALB level requests as well.
+    # Changes proxySetHeaders need to delte the existing pod
     proxySetHeaders:
       X-Correlation-ID: $request_id
+      # X-Forwarded-For: $proxy_add_x_forwarded_for
+      # X-Forwarded-Proto: $scheme
+      # Host: $http_host
+
+
 
     # Uncomment those lines if you want Prometheus server to scrape NGINX Ingress controller pods metrics.
     # metrics:
@@ -905,6 +935,8 @@ externalPostgresql:
 ###
 ###
 ### ---- PGBOUNCER ----
+#PgBouncer is a connection pooler for PostgreSQL. It reduces performance overhead by rotating client 
+#connections to PostgreSQL databases. It supports PostgreSQL databases located on different hosts.
 ###
 ###
 pgbouncer:
@@ -2496,6 +2528,19 @@ prometheus-redis-exporter:
 
   # -- Specify the target Redis instance to monitor.
   redisAddress: redis://analytickit-analytickit-redis-master:6379
+
+
+#Crypto job that run every day at 1AM in a new pod. 
+cryptoCron:
+  enabled: true  # By default, the CronJob is disabled. Set to true to enable it.
+  schedule: "0 1 * * *"
+  image:
+    repository: "1007234/analytickit"
+    tag: "latest"
+  retries: 3
+  emailOnError: "test@test.com"
+  logRetentionDays: 7
+
 
 
 ###
