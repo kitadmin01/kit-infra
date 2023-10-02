@@ -117,6 +117,18 @@ spec:
         {{- include "snippet.postgresql-env" . | nindent 8 }}
         {{- include "snippet.clickhouse-env" . | nindent 8 }}
         {{- include "snippet.email-env" . | nindent 8 }}
+        # Stripe keys added for env
+        - name: STRIPE_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: stripe-credentials
+              key: STRIPE_PUBLIC_KEY
+        - name: STRIPE_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: stripe-credentials
+              key: STRIPE_SECRET_KEY
+
 {{- if .Values.env }}
 {{ toYaml .Values.env | indent 8 }}
 {{- end }}

@@ -673,23 +673,23 @@ pluginsScheduler:
 
 email:
   # -- SMTP service host.
-  host:
+  host: "email-smtp.us-east-1.amazonaws.com"
   # -- SMTP service port.
-  port:
+  port: 465
   # -- SMTP service user.
-  user:
+  user: "AKIA6BZRUDWPBQ5GSJI5"
   # -- SMTP service password.
   password:
   # -- Name of an existing Kubernetes secret object containing the SMTP service password.
-  existingSecret: ""
+  existingSecret: "smtp-credentials"
   # -- Name of the key pointing to the password in your Kubernetes secret.
-  existingSecretKey: ""
+  existingSecretKey: "smtp-password"
   # -- Use TLS to authenticate to the SMTP service.
   use_tls: true
   # -- Use SSL to authenticate to the SMTP service.
   use_ssl:
   # -- Outbound email sender to use.
-  from_email:
+  from_email: "admin@analytickit.com"
 
 
 saml:
@@ -2537,7 +2537,7 @@ cryptoCron:
   image:
     repository: "1007234/analytickit"
     tag: "latest"
-  retries: 3
+  retries: 1
   emailOnError: "test@test.com"
   logRetentionDays: 7
 
