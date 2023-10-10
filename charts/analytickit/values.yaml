@@ -2,7 +2,7 @@
 cloud: aws
 
 # -- Notification email for notifications to be sent to from the AnalyticKit stack
-notificationEmail: analytickit@gmail.com
+notificationEmail: admin@analytickit.com
 # -- Site url specifies the canonical URL root the site can be accessed using.
 # This is used to e.g. generate shareable links to Dashboards.
 siteUrl:  https://dpa.analytickit.com
@@ -15,7 +15,7 @@ image:
   #registry: github.com
   #username: kitadmin01
   #password:
-  #email: analytickit@gmail.com
+  #email: admin@analytickit.com
   # -- AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`).
   sha:
   # -- AnalyticKit image tag to use (example: `release-1.35.0`).
@@ -675,7 +675,7 @@ email:
   # -- SMTP service host.
   host: "email-smtp.us-east-1.amazonaws.com"
   # -- SMTP service port.
-  port: 465
+  port: 587
   # -- SMTP service user.
   user: "AKIA6BZRUDWPBQ5GSJI5"
   # -- SMTP service password.
@@ -2538,7 +2538,7 @@ cryptoCron:
     repository: "1007234/analytickit"
     tag: "latest"
   retries: 1
-  emailOnError: "test@test.com"
+  emailOnError: "admin@analytickit.com"
   logRetentionDays: 7
 
 

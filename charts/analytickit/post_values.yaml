@@ -122,7 +122,7 @@ web:
       value:
     # -- Set google oauth 2 whitelisted domains users can log in from.
     - name: SOCIAL_AUTH_GOOGLE_OAUTH2_WHITELISTED_DOMAINS
-      value: "posthog.com"
+      value: "analytickit.com"
 
   internalMetrics:
     # -- Whether to capture information on operation of posthog into posthog, exposed in /instance/status page
@@ -1255,7 +1255,7 @@ clickhouse:
   # allowed. This should suffice for most use case although to expose to other
   # networks you will need to update this setting.
   #
-  # For more details on usage, see https://posthog.com/docs/self-host/deploy/configuration#securing-clickhouse
+  # For more details on usage, see https://analytickit.com/docs/self-host/deploy/configuration#securing-clickhouse
   allowedNetworkIps:
     - "10.0.0.0/8"
     - "172.16.0.0/12"
@@ -1355,7 +1355,7 @@ clickhouse:
       pullSecrets: []
 
   backup:
-    # https://posthog.com/docs/self-host/runbook/clickhouse/backup
+    # https://analytickit.com/docs/self-host/runbook/clickhouse/backup
     # https://github.com/AlexAkulov/clickhouse-backup
     enabled: false
     image:
