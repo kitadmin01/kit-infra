@@ -11,7 +11,7 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cloud | string | `"aws"` | Cloud service being deployed on (example: `aws`, `azure`, `do`, `gcp`, `other`). |
-| notificationEmail | string | `"analytickit@gmail.com"` | Notification email for notifications to be sent to from the AnalyticKit stack |
+| notificationEmail | string | `"admin@analytickit.com"` | Notification email for notifications to be sent to from the AnalyticKit stack |
 | siteUrl | string | `"https://dpa.analytickit.com"` |  |
 | image.repository | string | `"1007234/analytickit"` | AnalyticKit image repository to use. |
 | image.sha | string | `nil` | AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`). |
@@ -232,15 +232,15 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | pluginsScheduler.readinessProbe.successThreshold | int | `1` | The readiness probe success threshold |
 | pluginsScheduler.readinessProbe.timeoutSeconds | int | `5` | The readiness probe timeout seconds |
 | pluginsScheduler.sentryDSN | string | `nil` | Sentry endpoint to send errors to. Falls back to global sentryDSN |
-| email.host | string | `nil` | SMTP service host. |
-| email.port | string | `nil` | SMTP service port. |
-| email.user | string | `nil` | SMTP service user. |
+| email.host | string | `"email-smtp.us-east-1.amazonaws.com"` | SMTP service host. |
+| email.port | int | `587` | SMTP service port. |
+| email.user | string | `"AKIA6BZRUDWPBQ5GSJI5"` | SMTP service user. |
 | email.password | string | `nil` | SMTP service password. |
-| email.existingSecret | string | `""` | Name of an existing Kubernetes secret object containing the SMTP service password. |
-| email.existingSecretKey | string | `""` | Name of the key pointing to the password in your Kubernetes secret. |
+| email.existingSecret | string | `"smtp-credentials"` | Name of an existing Kubernetes secret object containing the SMTP service password. |
+| email.existingSecretKey | string | `"smtp-password"` | Name of the key pointing to the password in your Kubernetes secret. |
 | email.use_tls | bool | `true` | Use TLS to authenticate to the SMTP service. |
 | email.use_ssl | string | `nil` | Use SSL to authenticate to the SMTP service. |
-| email.from_email | string | `nil` | Outbound email sender to use. |
+| email.from_email | string | `"admin@analytickit.com"` | Outbound email sender to use. |
 | saml.enforced | bool | `false` | Whether password-based login is disabled and users automatically redirected to SAML login. Requires SAML to be properly configured. |
 | saml.disabled | bool | `false` | Whether SAML should be completely disabled. If set at build time, this will also prevent SAML dependencies from being installed. |
 | saml.entity_id | string | `nil` | Entity ID from your SAML IdP. entity_id: "id-from-idp-5f9d4e-47ca-5080" |
@@ -527,8 +527,8 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | cryptoCron.schedule | string | `"0 1 * * *"` |  |
 | cryptoCron.image.repository | string | `"1007234/analytickit"` |  |
 | cryptoCron.image.tag | string | `"latest"` |  |
-| cryptoCron.retries | int | `3` |  |
-| cryptoCron.emailOnError | string | `"test@test.com"` |  |
+| cryptoCron.retries | int | `1` |  |
+| cryptoCron.emailOnError | string | `"admin@analytickit.com"` |  |
 | cryptoCron.logRetentionDays | int | `7` |  |
 | installCustomStorageClass | bool | `false` |  |
 | busybox.image | string | `"busybox:1.34"` | Specify the image to use for e.g. init containers |
