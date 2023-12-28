@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: analytickit
 description: Web2 and Web3 analytic platform
 kubeVersion: ">= 1.23-0 <= 1.25-0"
