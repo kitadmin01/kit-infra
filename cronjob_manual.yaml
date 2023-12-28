@@ -1,0 +1,101 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: crypto-cron-manual
+  namespace: analytickit
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      containers:
+      - name: run-crypto-cron
+        image: 1007234/analytickit:latest
+        command: ["/bin/sh", "./analytickit/crypto/run_crypto.sh"]
+        env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_ACCESS_KEY_ID
+                  name: aws-creds
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: AWS_SECRET_ACCESS_KEY
+                  name: aws-creds
+            - name: KAFKA_HOSTS
+              value: analytickit-analytickit-kafka:9092
+            - name: KAFKA_URL
+              value: kafka://analytickit-analytickit-kafka:9092
+            - name: ANALYTICKIT_REDIS_HOST
+              value: analytickit-analytickit-redis-master
+            - name: ANALYTICKIT_REDIS_PORT
+              value: "6379"
+            - name: PRIMARY_DB
+              value: clickhouse
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: analytickit-secret
+                  name: analytickit
+            - name: SITE_URL
+              value: https://dpa.analytickit.com
+            - name: DEPLOYMENT
+              value: helm_aws_ha
+            - name: CAPTURE_INTERNAL_METRICS
+              value: "true"
+            - name: HELM_INSTALL_INFO
+              value: '{"chart_version":"0.0.1","cloud":"aws","deployment_type":"helm","hostname":"dpa.analytickit.com","ingress_type":"nginx","kube_version":"v1.25.16-eks-8cb36c9","operation":"upgrade","release_name":"analytickit","release_revision":3}'
+            - name: LOGGING_FORMATTER_NAME
+              value: json
+            - name: SENTRY_DSN
+            - name: ANALYTICKIT_POSTGRES_HOST
+              value: analytickit-pgbouncer
+            - name: ANALYTICKIT_POSTGRES_PORT
+              value: "6543"
+            - name: ANALYTICKIT_DB_USER
+              value: postgres
+            - name: ANALYTICKIT_DB_NAME
+              value: analytickit
+            - name: ANALYTICKIT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgresql-password
+                  name: analytickit-analytickit-postgresql
+            - name: USING_PGBOUNCER
+              value: "true"
+            - name: CLICKHOUSE_HOST
+              value: clickhouse-analytickit
+            - name: CLICKHOUSE_CLUSTER
+              value: analytickit
+            - name: CLICKHOUSE_DATABASE
+              value: analytickit
+            - name: CLICKHOUSE_PORT
+              value: "9000"        
+            - name: CLICKHOUSE_USER
+              value: admin
+            - name: CLICKHOUSE_PASSWORD
+              value: a1f31e03-c88e-4ca6-a2df-ad49183d15d9
+            - name: CLICKHOUSE_SECURE
+              value: "false"
+            - name: CLICKHOUSE_VERIFY
+              value: "false"
+            - name: EMAIL_HOST
+              value: email-smtp.us-east-1.amazonaws.com
+            - name: EMAIL_PORT
+              value: "587"
+            - name: EMAIL_HOST_USER
+              value: AKIA6BZRUDWPBQ5GSJI5
+            - name: EMAIL_HOST_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: smtp-password
+                  name: smtp-credentials
+            - name: EMAIL_USE_TLS
+              value: "true"
+            - name: EMAIL_USE_SSL
+              value: "false"
+            - name: DEFAULT_FROM_EMAIL
+              value: admin@analytickit.com
+        # ... (rest of your environment variables) ...
+        imagePullPolicy: Always
+      restartPolicy: Never

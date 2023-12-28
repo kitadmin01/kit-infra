@@ -2531,12 +2531,14 @@ prometheus-redis-exporter:
 
 
 #Crypto job that run every day at 1AM in a new pod. 
+#use image tag batchjob which is same as the latest image except this image has
+#aws pg_dump for db backup
 cryptoCron:
   enabled: true  # By default, the CronJob is disabled. Set to true to enable it.
   schedule: "0 1 * * *"
   image:
     repository: "1007234/analytickit"
-    tag: "latest"
+    tag: "batchjob"
   retries: 1
   emailOnError: "admin@analytickit.com"
   logRetentionDays: 7
