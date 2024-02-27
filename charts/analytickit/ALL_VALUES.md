@@ -15,7 +15,7 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | siteUrl | string | `"https://dpa.analytickit.com"` |  |
 | image.repository | string | `"1007234/analytickit"` | AnalyticKit image repository to use. |
 | image.sha | string | `nil` | AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`). |
-| image.tag | string | `nil` | AnalyticKit image tag to use (example: `release-1.35.0`). |
+| image.tag | string | `"20240227"` | AnalyticKit image tag to use (example: `release-1.35.0`). |
 | image.default | string | `":latest"` | AnalyticKit default image. Do not overwrite, use `image.sha` or `image.tag` instead. |
 | image.pullPolicy | string | `"Always"` | AnalyticKit image pull policy. |
 | sentryDSN | string | `nil` | Sentry endpoint to send errors to. |
@@ -526,7 +526,7 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | cryptoCron.enabled | bool | `true` |  |
 | cryptoCron.schedule | string | `"0 1 * * *"` |  |
 | cryptoCron.image.repository | string | `"1007234/analytickit"` |  |
-| cryptoCron.image.tag | string | `"latest"` |  |
+| cryptoCron.image.tag | string | `"batchjob"` |  |
 | cryptoCron.retries | int | `1` |  |
 | cryptoCron.emailOnError | string | `"admin@analytickit.com"` |  |
 | cryptoCron.logRetentionDays | int | `7` |  |
