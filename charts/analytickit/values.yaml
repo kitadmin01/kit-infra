@@ -2538,7 +2538,7 @@ cryptoCron:
   schedule: "0 1 * * *"
   image:
     repository: "1007234/analytickit"
-    tag: "batchjob"
+    tag: "20240229"
   retries: 1
   emailOnError: "admin@analytickit.com"
   logRetentionDays: 7

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: analytickit
 description: Web2 and Web3 analytic platform
-kubeVersion: ">= 1.23-0 <= 1.28-5"
+kubeVersion: ">=1.29.0-0"
 home: https://analytickit.com
 sources:
   - https://github.com/kitadmin01/kit-infra
