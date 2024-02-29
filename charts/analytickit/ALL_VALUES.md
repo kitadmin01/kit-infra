@@ -526,7 +526,7 @@ The following table lists the configurable parameters of the AnalyticKit chart a
 | cryptoCron.enabled | bool | `true` |  |
 | cryptoCron.schedule | string | `"0 1 * * *"` |  |
 | cryptoCron.image.repository | string | `"1007234/analytickit"` |  |
-| cryptoCron.image.tag | string | `"batchjob"` |  |
+| cryptoCron.image.tag | string | `"20240229"` |  |
 | cryptoCron.retries | int | `1` |  |
 | cryptoCron.emailOnError | string | `"admin@analytickit.com"` |  |
 | cryptoCron.logRetentionDays | int | `7` |  |
