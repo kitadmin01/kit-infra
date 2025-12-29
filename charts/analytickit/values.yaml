@@ -19,7 +19,7 @@ image:
   # -- AnalyticKit image SHA to use (example: `sha256:20af35fca6756d689d6705911a49dd6f2f6631e001ad43377b605cfc7c133eb4`).
   sha:
   # -- AnalyticKit image tag to use (example: `release-1.35.0`).
-  tag: "20240227"
+  tag: "20250405"
   # -- AnalyticKit default image. Do not overwrite, use `image.sha` or `image.tag` instead.
   default: ":latest"
   # -- AnalyticKit image pull policy.
@@ -77,6 +77,9 @@ events:
   # -- Pod security context for the events stack HorizontalPodAutoscaler.
   podSecurityContext:
     enabled: false
+  
+  # Note: Events deployment currently uses web.env for environment variables (see events-deployment.yaml template)
+  # DNS workaround IP addresses are configured in web.env section above
 
 web:
   # -- Whether to install the AnalyticKit web stack or not.
@@ -133,7 +136,25 @@ web:
       value: ""
     # added on July 7th 2023
     - name: DEBUG_QUERIES
-      value: "1"      
+      value: "1"
+    # DNS Workaround for EKS Migration (Dec 2025): Override DNS names with IP addresses
+    # Note: This is a temporary workaround. See DNS_RESOLUTION_FIX_EKS_MIGRATION.md for details
+    # These env vars override the snippet-generated DNS names (last env var wins in Kubernetes)
+    # Events deployment uses web.env, so these IPs apply to both web and events pods
+    - name: ANALYTICKIT_POSTGRES_HOST
+      value: "10.100.223.26"
+    - name: ANALYTICKIT_REDIS_HOST
+      value: "10.100.250.217"
+    - name: KAFKA_HOSTS
+      value: "10.100.148.79:9092"
+    - name: KAFKA_URL
+      value: "kafka://10.100.148.79:9092"
+    - name: KAFKA_BOOTSTRAP_SERVERS
+      value: "10.100.148.79:9092"
+    - name: ANALYTICKIT_KAFKA_HOSTS
+      value: "10.100.148.79:9092"
+    - name: ANALYTICKIT_KAFKA_URL
+      value: "kafka://10.100.148.79:9092"      
       
 
 
@@ -216,7 +237,14 @@ worker:
     behavior:
 
   # -- Additional env variables to inject into the worker stack deployment.
-  env: []
+  env:
+    # DNS Workaround for EKS Migration (Dec 2025): Override DNS names with IP addresses
+    # Note: This is a temporary workaround. See DNS_RESOLUTION_FIX_EKS_MIGRATION.md for details
+    # These env vars override the snippet-generated DNS names (last env var wins in Kubernetes)
+    - name: KAFKA_HOSTS
+      value: "10.100.148.79:9092"
+    - name: KAFKA_URL
+      value: "kafka://10.100.148.79:9092"
 
   # -- Resource limits for the worker stack deployment.
   resources:
@@ -262,7 +290,18 @@ plugins:
     behavior:
 
   # -- Additional env variables to inject into the plugin-server stack deployment.
-  env: []
+  env:
+    # DNS Workaround for EKS Migration (Dec 2025): Override DNS names with IP addresses
+    # Note: This is a temporary workaround. See DNS_RESOLUTION_FIX_EKS_MIGRATION.md for details
+    # These env vars override the snippet-generated DNS names (last env var wins in Kubernetes)
+    - name: ANALYTICKIT_POSTGRES_HOST
+      value: "10.100.223.26"
+    - name: ANALYTICKIT_REDIS_HOST
+      value: "10.100.250.217"
+    - name: KAFKA_HOSTS
+      value: "10.100.148.79:9092"
+    - name: KAFKA_URL
+      value: "kafka://10.100.148.79:9092"
 
   # -- Resource limits for the plugin-server stack deployment.
   resources:
@@ -676,8 +715,11 @@ email:
   host: "email-smtp.us-east-1.amazonaws.com"
   # -- SMTP service port.
   port: 587
-  # -- SMTP service user.
-  user: "***REMOVED-EXPOSED-AWS-KEY***"
+  # -- SMTP service user (AWS Access Key ID). 
+  # WARNING: Do not commit AWS credentials to git. Set via secret or environment variable.
+  # Use existingSecret or set this value at deployment time via --set or a secure values file.
+  # Note: This is a temporary workaround. See DNS_RESOLUTION_FIX_EKS_MIGRATION.md for details
+  user: ""
   # -- SMTP service password.
   password:
   # -- Name of an existing Kubernetes secret object containing the SMTP service password.
