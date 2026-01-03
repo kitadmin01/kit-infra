@@ -154,8 +154,9 @@ web:
     - name: ANALYTICKIT_KAFKA_HOSTS
       value: "10.100.148.79:9092"
     - name: ANALYTICKIT_KAFKA_URL
-      value: "kafka://10.100.148.79:9092"      
-      
+      value: "kafka://10.100.148.79:9092"
+    - name: CLICKHOUSE_HOST
+      value: "10.100.16.131"
 
 
   internalMetrics:
@@ -302,6 +303,8 @@ plugins:
       value: "10.100.148.79:9092"
     - name: KAFKA_URL
       value: "kafka://10.100.148.79:9092"
+    - name: CLICKHOUSE_HOST
+      value: "10.100.16.131"
 
   # -- Resource limits for the plugin-server stack deployment.
   resources:
